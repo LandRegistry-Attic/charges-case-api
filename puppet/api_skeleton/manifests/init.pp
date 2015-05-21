@@ -45,4 +45,13 @@ class api_skeleton (
     ],
   }
 
+  file { '/etc/nginx/conf.d/api_skeleton.conf':
+    ensure  => 'file',
+    mode    => '0755',
+    content => template("${module_name}/nginx.conf.erb"),
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    notify  => Service['nginx'],
+  }
+
 }
