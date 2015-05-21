@@ -8,5 +8,5 @@ coverage.xml
 test-reports/
 /puppet/modules
 *.lock
-.libraian
+.librarian
 .tmp
