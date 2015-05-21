@@ -6,7 +6,7 @@ class api_skeleton (
 ) {
   require ::standard_env
 
-  vcsrepo { '/opt/api-skeleton':
+  vcsrepo { '/opt/api_skeleton':
     ensure   => latest,
     provider => git,
     source   => 'git://github.com/LandRegistry/charges-api-skeleton',
@@ -16,13 +16,13 @@ class api_skeleton (
     notify  => Service['api_skeleton'],
   }
 
-  file { '/opt/api-skeleton/bin/run.sh':
+  file { '/opt/api_skeleton/bin/run.sh':
     ensure  => 'file',
     mode    => '0755',
     owner   => 'vagrant',
     group   => 'vagrant',
     source  => "puppet:///modules/${module_name}/run.sh",
-    require => Vcsrepo['/opt/api-skeleton'],
+    require => Vcsrepo['/opt/api_skeleton'],
     notify  => Service['api_skeleton'],
   }
 
@@ -39,8 +39,8 @@ class api_skeleton (
     enable   => true,
     provider => 'systemd',
     require  => [
-      Vcsrepo['/opt/api-skeleton'],
-      File['/opt/api-skeleton/bin/run.sh'],
+      Vcsrepo['/opt/api_skeleton'],
+      File['/opt/api_skeleton/bin/run.sh'],
       File['/etc/systemd/system/api_skeleton.service']
     ],
   }
