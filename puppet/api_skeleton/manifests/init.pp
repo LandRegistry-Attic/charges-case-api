@@ -6,4 +6,13 @@ class api_skeleton (
 ) {
   require ::standard_env
 
+  vcsrepo { '/opt/api-skeleton':
+    ensure   => latest,
+    provider => git,
+    source   => 'git://github.com/LandRegistry/charges-api-skeleton',
+    revision => $branch_or_revision,
+    owner    => 'vagrant',
+    group    => 'vagrant',
+  }
+
 }
