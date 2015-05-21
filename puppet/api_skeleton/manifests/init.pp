@@ -1,6 +1,6 @@
 # Install and configure the Flask Api Skeleton
 class api_skeleton (
-    $port = '9000',
+    $port = '9010',
     $host = '0.0.0.0',
     $branch_or_revision = 'master'
 ) {
@@ -13,6 +13,36 @@ class api_skeleton (
     revision => $branch_or_revision,
     owner    => 'vagrant',
     group    => 'vagrant',
+    notify  => Service['api_skeleton'],
+  }
+
+  file { '/opt/api-skeleton/bin/run.sh':
+    ensure  => 'file',
+    mode    => '0755',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    source  => "puppet:///modules/${module_name}/run.sh",
+    require => Vcsrepo['/opt/api-skeleton'],
+    notify  => Service['api_skeleton'],
+  }
+
+  file { '/etc/systemd/system/api_skeleton.service':
+    ensure  => 'file',
+    mode    => '0755',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    content => template("${module_name}/service.systemd.erb"),
+    notify  => [Exec['systemctl-daemon-reload'], Service['api_skeleton']],
+  }
+  service { 'api_skeleton':
+    ensure   => 'running',
+    enable   => true,
+    provider => 'systemd',
+    require  => [
+      Vcsrepo['/opt/api-skeleton'],
+      File['/opt/api-skeleton/bin/run.sh'],
+      File['/etc/systemd/system/api_skeleton.service']
+    ],
   }
 
 }
