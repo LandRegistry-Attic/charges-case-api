@@ -13,7 +13,7 @@ class api_skeleton (
     revision => $branch_or_revision,
     owner    => 'vagrant',
     group    => 'vagrant',
-    notify  => Service['api_skeleton'],
+    notify   => Service['api_skeleton'],
   }
 
   file { '/opt/api_skeleton/bin/run.sh':
