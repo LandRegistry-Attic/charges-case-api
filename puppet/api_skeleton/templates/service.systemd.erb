@@ -9,6 +9,8 @@ Type=simple
 ExecStart=/bin/bash -c './bin/run.sh'
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
+User=<%=@owner%>
+Group=<%=@group%>
 
 [Install]
 WantedBy=multi-user.target
