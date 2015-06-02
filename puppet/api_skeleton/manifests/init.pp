@@ -28,6 +28,12 @@ class api_skeleton (
     notify  => Service['api_skeleton'],
   }
 
+  file { '/var/run/api_skeleton':
+    ensure => 'directory',
+    owner  => $owner,
+    group  => $group,
+  }
+
   file { '/etc/systemd/system/api_skeleton.service':
     ensure  => 'file',
     mode    => '0755',
@@ -43,7 +49,8 @@ class api_skeleton (
     require  => [
       Vcsrepo['/opt/api_skeleton'],
       File['/opt/api_skeleton/bin/run.sh'],
-      File['/etc/systemd/system/api_skeleton.service']
+      File['/etc/systemd/system/api_skeleton.service'],
+      File['/var/run/api_skeleton'],
     ],
   }
 
