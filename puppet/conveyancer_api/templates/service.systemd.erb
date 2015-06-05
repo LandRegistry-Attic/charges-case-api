@@ -1,0 +1,14 @@
+[Unit]
+Description=Start the Charges Conveyancer API
+
+[Service]
+PIDFile=/var/run/conveyancer_api.pid
+WorkingDirectory=/opt/conveyancer_api
+Environment='CONVEYANCER_API_GUNICORN_PORT=<%=@port%>' 'CONVEYANCER_API_GUNICORN_HOST=<%=@host%>'
+Type=simple
+ExecStart=/bin/bash -c './bin/run.sh'
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target

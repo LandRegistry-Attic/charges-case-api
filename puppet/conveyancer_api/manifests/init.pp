@@ -1,51 +1,51 @@
-# Install and configure the Flask Api Skeleton
-class api_skeleton (
-    $port = '9010',
+# Install and configure the Flask Conveyancer API
+class conveyancer_api (
+    $port = '9015',
     $host = '0.0.0.0',
     $branch_or_revision = 'master'
 ) {
   require ::standard_env
 
-  vcsrepo { '/opt/api_skeleton':
+  vcsrepo { '/opt/conveyancer_api':
     ensure   => latest,
     provider => git,
-    source   => 'git://github.com/LandRegistry/charges-api-skeleton',
+    source   => 'git://github.com/LandRegistry/charges-conveyancer-api',
     revision => $branch_or_revision,
     owner    => 'vagrant',
     group    => 'vagrant',
-    notify  => Service['api_skeleton'],
+    notify  => Service['conveyancer_api'],
   }
 
-  file { '/opt/api_skeleton/bin/run.sh':
+  file { '/opt/conveyancer_api/bin/run.sh':
     ensure  => 'file',
     mode    => '0755',
     owner   => 'vagrant',
     group   => 'vagrant',
     source  => "puppet:///modules/${module_name}/run.sh",
-    require => Vcsrepo['/opt/api_skeleton'],
-    notify  => Service['api_skeleton'],
+    require => Vcsrepo['/opt/conveyancer_api'],
+    notify  => Service['conveyancer_api'],
   }
 
-  file { '/etc/systemd/system/api_skeleton.service':
+  file { '/etc/systemd/system/conveyancer_api.service':
     ensure  => 'file',
     mode    => '0755',
     owner   => 'vagrant',
     group   => 'vagrant',
     content => template("${module_name}/service.systemd.erb"),
-    notify  => [Exec['systemctl-daemon-reload'], Service['api_skeleton']],
+    notify  => [Exec['systemctl-daemon-reload'], Service['conveyancer_api']],
   }
-  service { 'api_skeleton':
+  service { 'conveyancer_api':
     ensure   => 'running',
     enable   => true,
     provider => 'systemd',
     require  => [
-      Vcsrepo['/opt/api_skeleton'],
-      File['/opt/api_skeleton/bin/run.sh'],
-      File['/etc/systemd/system/api_skeleton.service']
+      Vcsrepo['/opt/conveyancer_api'],
+      File['/opt/conveyancer_api/bin/run.sh'],
+      File['/etc/systemd/system/conveyancer_api.service']
     ],
   }
 
-  file { '/etc/nginx/conf.d/api_skeleton.conf':
+  file { '/etc/nginx/conf.d/conveyancer_api.conf':
     ensure  => 'file',
     mode    => '0755',
     content => template("${module_name}/nginx.conf.erb"),

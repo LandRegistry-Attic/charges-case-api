@@ -1,0 +1,11 @@
+{
+  "name": "charges-conveyancer-api",
+  "version": "0.0.1",
+  "author": "Land Registry Charges team",
+  "summary": "Install the Flask Conveyancer API.",
+  "license": "MIT",
+  "source": "https://github.com/LandRegistry/charges-conveyancer-api",
+  "project_page": "https://github.com/LandRegistry/charges-conveyancer-api",
+  "issues_url": "https://github.com/LandRegistry/charges-conveyancer-api.git",
+  "dependencies": [{"name": "puppetlabs/vcsrepo"}]
+}
