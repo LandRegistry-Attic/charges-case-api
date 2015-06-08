@@ -2,6 +2,7 @@
 class api_skeleton (
     $port = '9010',
     $host = '0.0.0.0',
+    $source = 'git://github.com/LandRegistry/charges-api-skeleton',
     $branch_or_revision = 'master',
     $owner = 'vagrant',
     $group = 'vagrant'
@@ -11,7 +12,7 @@ class api_skeleton (
   vcsrepo { "/opt/${module_name}":
     ensure   => latest,
     provider => git,
-    source   => 'git://github.com/LandRegistry/charges-api-skeleton',
+    source   => $source,
     revision => $branch_or_revision,
     owner    => $owner,
     group    => $group,
