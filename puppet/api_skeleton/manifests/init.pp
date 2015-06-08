@@ -4,6 +4,7 @@ class api_skeleton (
     $host = '0.0.0.0',
     $source = 'git://github.com/LandRegistry/charges-api-skeleton',
     $branch_or_revision = 'master',
+    $domain = 'api.*',
     $owner = 'vagrant',
     $group = 'vagrant'
 ) {
