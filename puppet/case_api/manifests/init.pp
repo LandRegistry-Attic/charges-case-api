@@ -65,4 +65,9 @@ class case_api (
     notify  => Service['nginx'],
   }
 
+  postgresql::server::db { 'charges':
+    user     => 'charges',
+    password => 'dapassword',
+  }
+
 }
