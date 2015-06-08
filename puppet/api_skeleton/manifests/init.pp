@@ -8,53 +8,53 @@ class api_skeleton (
 ) {
   require ::standard_env
 
-  vcsrepo { '/opt/api_skeleton':
+  vcsrepo { "/opt/${module_name}":
     ensure   => latest,
     provider => git,
     source   => 'git://github.com/LandRegistry/charges-api-skeleton',
     revision => $branch_or_revision,
     owner    => $owner,
     group    => $group,
-    notify   => Service['api_skeleton'],
+    notify   => Service[$module_name],
   }
 
-  file { '/opt/api_skeleton/bin/run.sh':
+  file { "/opt/${module_name}/bin/run.sh":
     ensure  => 'file',
     mode    => '0755',
     owner   => $owner,
     group   => $group,
-    source  => "puppet:///modules/${module_name}/run.sh",
-    require => Vcsrepo['/opt/api_skeleton'],
-    notify  => Service['api_skeleton'],
+    content => template("${module_name}/run.sh.erb"),
+    require => Vcsrepo["/opt/${module_name}"],
+    notify  => Service[$module_name],
   }
 
-  file { '/var/run/api_skeleton':
+  file { "/var/run/${module_name}":
     ensure => 'directory',
     owner  => $owner,
     group  => $group,
   }
 
-  file { '/etc/systemd/system/api_skeleton.service':
+  file { "/etc/systemd/system/${module_name}.service":
     ensure  => 'file',
     mode    => '0755',
     owner   => $owner,
     group   => $group,
     content => template("${module_name}/service.systemd.erb"),
-    notify  => [Exec['systemctl-daemon-reload'], Service['api_skeleton']],
+    notify  => [Exec['systemctl-daemon-reload'], Service[$module_name]],
   }
-  service { 'api_skeleton':
+  service { $module_name:
     ensure   => 'running',
     enable   => true,
     provider => 'systemd',
     require  => [
-      Vcsrepo['/opt/api_skeleton'],
-      File['/opt/api_skeleton/bin/run.sh'],
-      File['/etc/systemd/system/api_skeleton.service'],
-      File['/var/run/api_skeleton'],
+      Vcsrepo["/opt/${module_name}"],
+      File["/opt/${module_name}/bin/run.sh"],
+      File["/etc/systemd/system/${module_name}.service"],
+      File["/var/run/${module_name}"],
     ],
   }
 
-  file { '/etc/nginx/conf.d/api_skeleton.conf':
+  file { "/etc/nginx/conf.d/${module_name}.conf":
     ensure  => 'file',
     mode    => '0755',
     content => template("${module_name}/nginx.conf.erb"),

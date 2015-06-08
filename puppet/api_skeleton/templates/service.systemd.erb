@@ -1,9 +1,9 @@
 [Unit]
-Description=Start the Charges API Skeleton
+Description=Start the <%=@module_name%>
 
 [Service]
-PIDFile=/var/run/api_skeleton/api_skeleton.pid
-WorkingDirectory=/opt/api_skeleton
+PIDFile=/var/run/<%=@module_name%>/<%=@module_name%>.pid
+WorkingDirectory=/opt/<%=@module_name%>
 Environment='API_SKELETON_GUNICORN_PORT=<%=@port%>' 'API_SKELETON_GUNICORN_HOST=<%=@host%>'
 Type=simple
 ExecStart=/bin/bash -c './bin/run.sh'
