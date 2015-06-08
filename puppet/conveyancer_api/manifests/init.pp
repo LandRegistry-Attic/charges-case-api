@@ -55,3 +55,10 @@ class conveyancer_api (
   }
 
 }
+
+class { 'postgresql::server': }
+
+postgresql::server::db { 'charges':
+  user     => 'charges133t',
+  password => 'dapassword',
+}
