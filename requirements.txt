@@ -1,3 +1,5 @@
 Flask
 Flask-Script
 gunicorn
+alembic
+psycopg2
