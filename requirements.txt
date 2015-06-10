@@ -3,3 +3,5 @@ Flask-Script
 gunicorn
 alembic
 psycopg2
+Flask-SQLAlchemy
+Flask-Migrate

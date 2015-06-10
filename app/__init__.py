@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.script import Manager
-from app import helloworld
+from app import helloworld, case
 
 
 def create_manager():
@@ -9,5 +9,6 @@ def create_manager():
 
     manager = Manager(app)
     app.register_blueprint(helloworld.blueprint)
+    app.register_blueprint(case.blueprint)
 
     return manager
