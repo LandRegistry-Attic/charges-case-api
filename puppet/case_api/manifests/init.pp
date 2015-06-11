@@ -1,10 +1,10 @@
-# Install and configure the Flask Api Skeleton
-class api_skeleton (
+# Install and configure the Conveyancer Api
+class case_api (
     $port = '9010',
     $host = '0.0.0.0',
-    $source = 'git://github.com/LandRegistry/charges-api-skeleton',
+    $source = 'git://github.com/LandRegistry/charges-case-api',
     $branch_or_revision = 'master',
-    $domain = 'api.*',
+    $domain = 'case-api.*',
     $owner = 'vagrant',
     $group = 'vagrant'
 ) {
