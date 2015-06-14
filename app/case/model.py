@@ -2,6 +2,7 @@ from app.db import db
 from app.helper.serialize import serialize_datetime
 import json
 
+
 class Case(db.Model):
 
     __tablename__ = 'case'
@@ -28,16 +29,6 @@ class Case(db.Model):
         self.last_updated = last_updated
         self.created_on = created_on
 
-    def __repr__(self):
-        return '<Case(id {}, deed_id {}, conveyancer_id {}, status {}, last_updated {}, created {})>'.format(
-            self.id,
-            self.deed_id,
-            self.conveyancer_id,
-            self.status,
-            self.last_updated,
-            self.created_on
-        )
-
     def save(self):
         db.session.add(self)
         db.session.commit()
@@ -55,6 +46,7 @@ class Case(db.Model):
         case = Case.query.filter_by(id=id_).first()
         db.session.delete(case)
         db.session.commit()
+
 
 def as_json(self):
     return dict(
