@@ -1,10 +1,11 @@
-from flask import Flask
 from flask.ext.script import Manager
 from app import helloworld, case, db
+from flask.ext.api import FlaskAPI
 
 
 def create_manager():
-    app = Flask(__name__)
+    app = FlaskAPI(__name__)
+
     app.config.from_pyfile('config.py')
 
     app.register_blueprint(helloworld.blueprint)
