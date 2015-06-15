@@ -1,10 +1,8 @@
-import json
 from app.case.model import Case, as_json
 from tests.helpers import with_client, setUpApp, with_context
 import unittest
 from datetime import datetime
 from app.helper.serialize import serialize_datetime
-from random import randint
 
 
 class TestCase (unittest.TestCase):
@@ -27,7 +25,9 @@ class TestCase (unittest.TestCase):
         last_updated = datetime.today()
         created_on = datetime.today()
 
-        case = Case(id, deed_id, conveyancer_id, status, last_updated, created_on)
+        case = Case(id, deed_id, conveyancer_id,
+                    status, last_updated, created_on)
+
         case_as_json = as_json(case)
 
         assert case_as_json["id"] == id
@@ -46,7 +46,8 @@ class TestCase (unittest.TestCase):
         last_updated = datetime.today()
         created_on = datetime.today()
 
-        case = Case(id, deed_id, conveyancer_id, status, last_updated, created_on)
+        case = Case(id, deed_id, conveyancer_id,
+                    status, last_updated, created_on)
 
         assert case.id == id
         assert case.deed_id == deed_id

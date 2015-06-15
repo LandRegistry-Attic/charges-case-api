@@ -1,5 +1,5 @@
 from datetime import datetime
-from tests.helpers import with_client, setUpApp, with_context
+from tests.helpers import setUpApp, with_context
 from app.helper.serialize import serialize_datetime
 
 import unittest
