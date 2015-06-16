@@ -1,6 +1,6 @@
 # Install and configure the Conveyancer Api
 class case_api (
-    $port = '9010',
+    $port = '9070',
     $host = '0.0.0.0',
     $source = 'git://github.com/LandRegistry/charges-case-api',
     $branch_or_revision = 'master',
