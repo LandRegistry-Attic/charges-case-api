@@ -68,8 +68,8 @@ class case_api (
   }
 
   postgresql::server::db { 'charges':
-    user     => 'charges',
-    password => 'dapassword',
+    user     => $owner,
+    password => postgresql_password($owner, 'dapassword'),
   }
 
 }
