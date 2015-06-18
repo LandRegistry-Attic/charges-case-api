@@ -2,5 +2,5 @@ from flask import Blueprint
 from . import server
 
 
-blueprint = Blueprint('helloworld', __name__)
+blueprint = Blueprint('case', __name__)
 server.register_routes(blueprint)
