@@ -55,6 +55,7 @@ class case_api (
       File["/opt/${module_name}/bin/run.sh"],
       File["/etc/systemd/system/${module_name}.service"],
       File["/var/run/${module_name}"],
+      Postgresql::Server::Db['charges'],
     ],
   }
 
