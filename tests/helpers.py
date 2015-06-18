@@ -21,6 +21,7 @@ def with_client(test):
 
 def setUpApp(self):
     manager = create_manager()
+
     self.app = manager.app
     self.manager = manager
     self.app.config['TESTING'] = True
