@@ -9,6 +9,8 @@ class case_api (
     $group = 'vagrant'
 ) {
   require ::standard_env
+  require ::postgresql::server
+  require ::postgresql::lib::devel
 
   vcsrepo { "/opt/${module_name}":
     ensure   => latest,
