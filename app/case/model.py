@@ -1,7 +1,6 @@
 from app.db import db
 from app.helper.serialize import serialize_datetime
-import json
-
+from app.helper.dict_from_model import sqlalchemy_to_dict
 
 class Case(db.Model):
 
@@ -35,11 +34,12 @@ class Case(db.Model):
 
     @staticmethod
     def all():
-        return Case.query.all()
+        return [sqlalchemy_to_dict(case) for case in Case.query.all()]
 
     @staticmethod
-    def all_as_json():
-        return json.dumps([as_json(i) for i in Case.query.all()])
+    def get(id_):
+        case = Case.query.filter_by(id=id_).first()
+        return sqlalchemy_to_dict(case)
 
     @staticmethod
     def delete(id_):
@@ -47,13 +47,12 @@ class Case(db.Model):
         db.session.delete(case)
         db.session.commit()
 
-
-def as_json(self):
-    return dict(
-        id=self.id,
-        deed_id=self.deed_id,
-        conveyancer_id=self.conveyancer_id,
-        status=self.status,
-        last_updated=serialize_datetime(self.last_updated),
-        created_on=serialize_datetime(self.created_on)
-    )
+    def as_json(self):
+        return dict(
+            id=self.id,
+            deed_id=self.deed_id,
+            conveyancer_id=self.conveyancer_id,
+            status=self.status,
+            last_updated=serialize_datetime(self.last_updated),
+            created_on=serialize_datetime(self.created_on)
+        )

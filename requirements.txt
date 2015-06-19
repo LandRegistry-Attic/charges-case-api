@@ -2,6 +2,7 @@ Flask
 Flask-Script
 Flask-SQLAlchemy
 Flask-Migrate
+Flask-API
 gunicorn
 alembic
 psycopg2
