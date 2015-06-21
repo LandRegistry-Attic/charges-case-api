@@ -1,10 +1,7 @@
 from flask.ext.api import renderers
-from app.helper import serialize
 from types import *
 import json
 from flask.json import JSONEncoder
-
-
 
 
 class JSONRenderer(renderers.BaseRenderer):
