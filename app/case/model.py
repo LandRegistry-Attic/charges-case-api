@@ -1,7 +1,7 @@
-from sqlalchemy.orm.exc import UnmappedInstanceError
 from app.db import db
 from app.helper.serialize import serialize_datetime
 from app import json
+from dateutil.parser import parse
 
 
 class Case(db.Model, json.Serialisable):
@@ -39,12 +39,11 @@ class Case(db.Model, json.Serialisable):
 
         return case
 
-    @staticmethod
-    def _json_format(o):
+    def json_format(self):
         jsondata = {}
 
         def append(name, parameter):
-            value = parameter(o)
+            value = parameter(self)
             if value is not None:
                 jsondata[name] = value
 
@@ -59,8 +58,7 @@ class Case(db.Model, json.Serialisable):
 
         return jsondata
 
-    @staticmethod
-    def _object_hook(dct):
+    def object_hook(dct):
         _id = dct.get('id')
         _deed_id = dct.get('deed_id')
         _conveyancer_id = dct.get('conveyancer_id')
@@ -73,7 +71,7 @@ class Case(db.Model, json.Serialisable):
         case.deed_id = _deed_id
         case.conveyancer_id = _conveyancer_id
         case.status = _status
-        case.last_updated = _last_updated
-        case.created_on = _created_on
+        case.last_updated = parse(_last_updated)
+        case.created_on = parse(_created_on)
 
         return case

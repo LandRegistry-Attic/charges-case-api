@@ -6,14 +6,13 @@ def deserialiseFailed(name, recovered):
         "Would deserialise {} not {}".format(name, recovered)
     )
 
+
 class Serialisable(object):
 
-    @staticmethod
-    def _json_format(o):
+    def json_format(o):
         return NotImplemented
 
-    @staticmethod
-    def _object_hook(dct):
+    def object_hook(dct):
         return NotImplemented
 
     @staticmethod
@@ -29,12 +28,12 @@ class Serialisable(object):
     def _object_hooks(jsondata):
         cls_name = jsondata.get('type')
         sublclasses = Serialisable.__subclass(cls_name)
-        return sublclasses[0]._object_hook(jsondata)
+        return sublclasses[0].object_hook(jsondata)
 
     @staticmethod
     def _defaults(obj):
         cls_name = type(obj).__name__
-        json_dct = Serialisable.__subclass(cls_name)[0]._json_format(obj)
+        json_dct = Serialisable.__subclass(cls_name)[0].json_format(obj)
         json_dct['type'] = cls_name
         return json_dct
 

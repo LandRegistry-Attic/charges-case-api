@@ -1,4 +1,3 @@
-from flask import jsonify
 
 
 def register_routes(blueprint):
@@ -10,4 +9,4 @@ def register_routes(blueprint):
             "Hello": "World",
         }
 
-        return jsonify(result)
+        return result
