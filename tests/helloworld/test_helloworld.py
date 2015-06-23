@@ -1,5 +1,5 @@
-from tests.helpers import with_client, setUpApp, with_context
 import unittest
+from tests.helpers import setUpApp, with_client, with_context
 
 
 class TestHelloWorld (unittest.TestCase):
