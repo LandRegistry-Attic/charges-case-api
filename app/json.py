@@ -6,7 +6,6 @@ def deserialiseFailed(name, recovered):
         "Would deserialise {} not {}".format(name, recovered)
     )
 
-
 class Serialisable(object):
 
     @staticmethod
@@ -41,6 +40,9 @@ class Serialisable(object):
 
     @classmethod
     def from_json(cls, jsondata):
+        if isinstance(jsondata, dict):
+            jsondata = pythonjson.dumps(jsondata)
+
         recovered = pythonjson.loads(
             jsondata,
             object_hook=Serialisable._object_hooks

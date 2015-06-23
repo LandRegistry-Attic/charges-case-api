@@ -34,11 +34,8 @@ class Case(db.Model, json.Serialisable):
         if case is None:
             return case
 
-        try:
-            db.session.delete(case)
-            db.session.commit()
-        except Exception as inst:
-            print(type(inst) + ":" + inst)
+        db.session.delete(case)
+        db.session.commit()
 
         return case
 

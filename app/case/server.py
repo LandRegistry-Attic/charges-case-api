@@ -2,6 +2,7 @@ from app.case.model import Case
 from flask.ext.api import exceptions, status
 from app.helper.serialize import sqlalchemy_to_dict, dict_to_sqlalchemy
 from flask import request
+import json
 
 
 def register_routes(blueprint):
@@ -16,24 +17,33 @@ def register_routes(blueprint):
     def get_case(id_):
         case = Case.get(id_)
 
-        if case is not None:
-            return case.to_json(), status.HTTP_200_OK
-        else:
+        if case is None:
             raise exceptions.NotFound()
+        else:
+            return case.to_json(), status.HTTP_200_OK
 
     @blueprint.route('/case', methods=['POST'])
     def create_case():
         case_json = request.data
-        case = Case()
+        case_json["type"] = "Case"
 
-        case = dict_to_sqlalchemy(case_json, case)
-        case.save()
+        case = Case.from_json(case_json)
 
-        return sqlalchemy_to_dict(case), status.HTTP_200_OK
+        try:
+            case.save()
+        except Exception as inst:
+            print(str(type(inst)) + ":" + str(inst))
+            raise exceptions.NotAcceptable()
+
+        return case.to_json(), status.HTTP_200_OK
 
     @blueprint.route('/case/<id_>', methods=['DELETE'])
     def delete_case(id_):
-        case = Case.delete(id_)
+
+        try:
+            case = Case.delete(id_)
+        except Exception as inst:
+            print(type(inst) + ":" + inst)
 
         if case is None:
             raise exceptions.NotFound

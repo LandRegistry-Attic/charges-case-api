@@ -1,10 +1,13 @@
 from datetime import datetime
-
+from dateutil.parser import parse
 
 def serialize_datetime(value):
     if value is None:
         return None
-    return value.isoformat()
+    if isinstance(value, str):
+        return parse(value).isoformat()
+    if isinstance(value, datetime):
+        return value.isoformat()
 
 
 def serialize_list(list_):
