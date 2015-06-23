@@ -17,7 +17,7 @@ def register_routes(blueprint):
         case = Case.get(id_)
 
         if case is not None:
-            return case.to_json()
+            return case.to_json(), status.HTTP_200_OK
         else:
             raise exceptions.NotFound()
 
@@ -31,20 +31,11 @@ def register_routes(blueprint):
 
         return sqlalchemy_to_dict(case), status.HTTP_200_OK
 
-    @blueprint.route('/case/<id_>', methods=['PATCH'])
-    def update_case(id_):
-        case_json = json.dumps(request.data)
-        case = Case.get(id_)
-
-        if case is not None:
-            case = case.from_json(case_json)
-            case.save()
-        else:
-            raise exceptions.NotFound()
-
-        sqlalchemy_to_dict(case), status.HTTP_200_OK
-
     @blueprint.route('/case/<id_>', methods=['DELETE'])
     def delete_case(id_):
-        Case.delete(id_)
-        return {'id': id_}, status.HTTP_200_OK
+        case = Case.delete(id_)
+
+        if case is None:
+            raise exceptions.NotFound
+        else:
+            return case.to_json(), status.HTTP_200_OK

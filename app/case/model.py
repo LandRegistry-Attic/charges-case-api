@@ -1,3 +1,4 @@
+from sqlalchemy.orm.exc import UnmappedInstanceError
 from app.db import db
 from app.helper.serialize import serialize_datetime
 from app import json
@@ -28,12 +29,18 @@ class Case(db.Model, json.Serialisable):
 
     @staticmethod
     def delete(id_):
-
         case = Case.query.filter_by(id=id_).first()
 
-        db.session.delete(case)
-        db.session.commit()
-        return
+        if case is None:
+            return case
+
+        try:
+            db.session.delete(case)
+            db.session.commit()
+        except Exception as inst:
+            print(type(inst) + ":" + inst)
+
+        return case
 
     @staticmethod
     def _json_format(o):
