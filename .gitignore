@@ -11,3 +11,6 @@ test-reports/
 .librarian
 .tmp
 .idea
+bin
+lib
+include
