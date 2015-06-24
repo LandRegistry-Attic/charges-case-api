@@ -11,6 +11,7 @@ class CaseHelper:
     _last_updated = datetime.today()
     _created_on = datetime.today()
 
+
     @staticmethod
     def _create_case_db():
         CaseHelper._id = randint(1, 999999)
