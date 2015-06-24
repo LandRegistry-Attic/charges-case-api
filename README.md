@@ -52,3 +52,14 @@ python run.py db revision --autogenerate
   "conveyancer_id": Integer,
 }
 ```
+
+e.g.
+```
+{
+  "id": 865604,
+  "deed_id": 1,
+  "conveyancer_id": 1,
+  "status": "the status",
+  "last_updated": "2015-06-23T23:37:08.156342",
+  "created_on": "2015-06-23T23:37:08.156356"
+}
