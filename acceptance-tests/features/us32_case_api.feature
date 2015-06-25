@@ -15,5 +15,6 @@ Acceptance Criteria:
       - conveyancer id(int)
 
 Scenario: Retrieve case from case API
-    Given I call the case API
+    Given I have created a case
+    When I call the case API
     Then the correct case details are returned

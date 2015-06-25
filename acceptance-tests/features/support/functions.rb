@@ -11,6 +11,8 @@ def create_case_data(case_file)
   response = connection.request(request)
   if response.code == 200
     case_hash
+  else
+    response
   end
 end
 
