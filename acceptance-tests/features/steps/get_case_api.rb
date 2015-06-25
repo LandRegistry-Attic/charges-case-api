@@ -1,5 +1,5 @@
 Given(/^I call the case API$/) do
-  response = Net::HTTP.get_response(URI($CHARGES_API_URL + '/case'))
+  response = Net::HTTP.get_response(URI($CASE_API_URL + '/case'))
   $apiData = MultiJson.load(response.body)
 end
 
