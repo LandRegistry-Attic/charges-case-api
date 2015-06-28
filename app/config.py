@@ -2,9 +2,6 @@ import os
 
 DEBUG = True
 
-DEFAULT_RENDERERS = ['app.helper.custom_api_render.JSONRenderer',
-                     'flask.ext.api.renderers.BrowsableAPIRenderer']
-
 try:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
 except KeyError:
