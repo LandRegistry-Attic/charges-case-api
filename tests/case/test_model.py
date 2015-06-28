@@ -1,7 +1,7 @@
 from app.case.model import Case
 import unittest
 from app.helper.serialize import serialize_datetime
-from tests.helpers import setUpApp, with_context
+from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper
 
 
@@ -9,6 +9,10 @@ class TestCaseModel (unittest.TestCase):
 
     def setUp(self):
         setUpApp(self)
+        setUpDB(self)
+
+    def tearDown(self):
+        tearDownDB(self)
 
     @with_context
     def test_get_all(self):

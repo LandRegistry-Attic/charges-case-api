@@ -1,5 +1,6 @@
 from app.case.model import Case
-from tests.helpers import with_client, setUpApp, with_context
+from tests.helpers import with_client, setUpApp, \
+    with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper
 from random import randint
 from flask.ext.api import status
@@ -14,6 +15,10 @@ class TestCaseRoutes (unittest.TestCase):
 
     def setUp(self):
         setUpApp(self)
+        setUpDB(self)
+
+    def tearDown(self):
+        tearDownDB(self)
 
     @with_context
     @with_client
@@ -62,15 +67,6 @@ class TestCaseRoutes (unittest.TestCase):
         Case.delete(case_id)
 
         response = client.get('/case/{}'.format(case_id))
-
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert response.data.decode() == self.no_resource_text
-
-    @with_context
-    @with_client
-    def test_no_get_route(self, client):
-
-        response = client.delete('/case/{}'.format(randint(1, 9999999)))
 
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.data.decode() == self.no_resource_text
