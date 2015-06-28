@@ -5,13 +5,25 @@ The Case API is a JSON API which stores case objects.
 This API holds the functionality for creating the migrating tables, getting data
 from the database, converting to JSON and returns as an endpoint.
 
+### Contents
+
+- [Usage](#usage)
+- [Getting Started](#getting-started)
+- [Changing the migration](#changing-the-migration)
+- [Current Model](#current-model)
+
 ## Usage
 ```
-get /                 # automatically redirects to helloworld for app test
-get /helloworld       # test endpoint for the application
-get /case             # get all cases
+get     /                 # automatically redirects to helloworld for app test
+get     /helloworld       # test endpoint for the application
+get     /case             # get all cases
+get     /case/<id_>       # get a cases with an id in the URL
+delete  /case/<id_>       # delete a case with an id in the URL
+post    /case             # Create a case by posting a json object reflecting the model
 ```
-## Getting started
+> [model](#current-model) for post
+
+## Getting Started
 1. Clone the repo
 2. In the directory enter the command
 ```
@@ -40,6 +52,8 @@ All you have to do is change/create the related model and run the command
 python run.py db revision --autogenerate
 ```
 
+> For some helpful documentation on using alembic go [here](alembic.md)
+
 ## Current Model
 
 ```
@@ -63,3 +77,4 @@ e.g.
   "last_updated": "2015-06-23T23:37:08.156342",
   "created_on": "2015-06-23T23:37:08.156356"
 }
+```
