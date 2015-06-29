@@ -1,11 +1,11 @@
 {
-  "name": "api_skeleton",
+  "name": "case_api",
   "version": "0.0.1",
   "author": "Land Registry Charges team",
-  "summary": "Install the Flask Api Skeleton.",
+  "summary": "Install the case api.",
   "license": "MIT",
-  "source": "https://github.com/LandRegistry/charges-api-skeleton",
-  "project_page": "https://github.com/LandRegistry/charges-api-skeleton",
-  "issues_url": "https://github.com/LandRegistry/charges-api-skeleton",
+  "source": "https://github.com/LandRegistry/charges-case-api",
+  "project_page": "https://github.com/LandRegistry/charges-case-api",
+  "issues_url": "https://github.com/LandRegistry/charges-case-api",
   "dependencies": [{"name": "puppetlabs/vcsrepo"}]
 }

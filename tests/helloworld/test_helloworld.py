@@ -1,5 +1,5 @@
-from tests.helpers import with_client, setUpApp, with_context
 import unittest
+from tests.helpers import setUpApp, with_client, with_context
 
 
 class TestHelloWorld (unittest.TestCase):
@@ -11,5 +11,5 @@ class TestHelloWorld (unittest.TestCase):
     @with_client
     def test_get_api(self, client):
         response = client.get('/helloworld')
-        assert response.status_code == 200
-        assert '"Hello": "World"' in response.data.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('"Hello": "World"', response.data.decode())

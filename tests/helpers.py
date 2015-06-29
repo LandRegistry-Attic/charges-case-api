@@ -1,5 +1,8 @@
 from functools import wraps
 from app import create_manager
+from app.db import db
+
+database_URI = 'sqlite://'
 
 
 def with_context(test):
@@ -22,5 +25,17 @@ def with_client(test):
 def setUpApp(self):
     manager = create_manager()
     self.app = manager.app
+    self.app.config["SQLALCHEMY_DATABASE_URI"] = database_URI
     self.manager = manager
     self.app.config['TESTING'] = True
+
+
+def setUpDB(self):
+    with self.app.app_context():
+        db.create_all()
+
+
+def tearDownDB(self):
+    with self.app.app_context():
+        db.session.remove()
+        db.drop_all()

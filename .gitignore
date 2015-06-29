@@ -10,3 +10,7 @@ test-reports/
 *.lock
 .librarian
 .tmp
+.idea
+bin
+lib
+include
