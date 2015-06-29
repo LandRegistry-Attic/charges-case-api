@@ -19,18 +19,18 @@ class TestCaseModel (unittest.TestCase):
         case_id = CaseHelper._create_case_db()
         case = Case.get(case_id)
 
-        assert case in Case.all()
+        self.assertIn(case, Case.all())
 
         CaseHelper._delete_case(case_id)
 
-        assert case not in Case.all()
+        self.assertNotIn(case, Case.all())
 
     @with_context
     def test_get(self):
         case_id = CaseHelper._create_case_db()
         case = Case.get(case_id)
 
-        assert case.id == case_id
+        self.assertEqual(case.id, case_id)
 
         CaseHelper._delete_case(case_id)
 
@@ -39,12 +39,12 @@ class TestCaseModel (unittest.TestCase):
         case_id = CaseHelper._create_case_db()
         case = Case.get(case_id)
 
-        assert case.id == CaseHelper._id
+        self.assertEqual(case.id, CaseHelper._id)
 
         Case.delete(case.id)
         case = Case.get(case.id)
 
-        assert case is None
+        self.assertIs(case, None)
 
     @with_context
     def test_to_json(self):
@@ -52,34 +52,34 @@ class TestCaseModel (unittest.TestCase):
 
         case_as_json = case.to_json()
 
-        assert case_as_json["id"] == CaseHelper._id
-        assert case_as_json["deed_id"] == CaseHelper._deed_id
-        assert case_as_json["conveyancer_id"] == CaseHelper._conveyancer_id
-        assert case_as_json["status"] == CaseHelper._status
-        assert case_as_json["last_updated"] == serialize_datetime(
-            CaseHelper._last_updated.isoformat())
-        assert case_as_json["created_on"] == serialize_datetime(
-            CaseHelper._created_on.isoformat())
+        self.assertEqual(case_as_json["id"], CaseHelper._id)
+        self.assertEqual(case_as_json["deed_id"], CaseHelper._deed_id)
+        self.assertEqual(case_as_json["conveyancer_id"], CaseHelper._conveyancer_id)
+        self.assertEqual(case_as_json["status"], CaseHelper._status)
+        self.assertEqual(case_as_json["last_updated"], serialize_datetime(
+            CaseHelper._last_updated.isoformat()))
+        self.assertEqual(case_as_json["created_on"], serialize_datetime(
+            CaseHelper._created_on.isoformat()))
 
     @with_context
     def test_from_json(self):
 
         case = CaseHelper._create_case()
 
-        assert case.id == CaseHelper._id
-        assert case.deed_id == CaseHelper._deed_id
-        assert case.conveyancer_id == CaseHelper._conveyancer_id
-        assert case.status == CaseHelper._status
-        assert case.last_updated == CaseHelper._last_updated
-        assert case.created_on == CaseHelper._created_on
+        self.assertEqual(case.id, CaseHelper._id)
+        self.assertEqual(case.deed_id, CaseHelper._deed_id)
+        self.assertEqual(case.conveyancer_id, CaseHelper._conveyancer_id)
+        self.assertEqual(case.status, CaseHelper._status)
+        self.assertEqual(case.last_updated, CaseHelper._last_updated)
+        self.assertEqual(case.created_on, CaseHelper._created_on)
 
     @with_context
     def test_model(self):
         case = CaseHelper._create_case()
 
-        assert case.id == CaseHelper._id
-        assert case.deed_id == CaseHelper._deed_id
-        assert case.conveyancer_id == CaseHelper._conveyancer_id
-        assert case.status == CaseHelper._status
-        assert case.last_updated == CaseHelper._last_updated
-        assert case.created_on == CaseHelper._created_on
+        self.assertEqual(case.id, CaseHelper._id)
+        self.assertEqual(case.deed_id, CaseHelper._deed_id)
+        self.assertEqual(case.conveyancer_id, CaseHelper._conveyancer_id)
+        self.assertEqual(case.status, CaseHelper._status)
+        self.assertEqual(case.last_updated, CaseHelper._last_updated)
+        self.assertEqual(case.created_on, CaseHelper._created_on)

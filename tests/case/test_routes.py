@@ -27,9 +27,9 @@ class TestCaseRoutes (unittest.TestCase):
 
         response = client.get('/case')
 
-        assert response.status_code == status.HTTP_200_OK
-        assert '"id": {}'.format(case_id) in response.data.decode()
-        assert json.loads(response.data.decode()).__len__() > 0
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('"id": {}'.format(case_id), response.data.decode())
+        self.assertGreater(json.loads(response.data.decode()).__len__(), 0)
 
         CaseHelper._delete_case(case_id)
 
@@ -41,8 +41,8 @@ class TestCaseRoutes (unittest.TestCase):
 
         response = client.get('/case/{}'.format(case_id))
 
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data.decode() == json.dumps(case.to_json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data.decode(), json.dumps(case.to_json()))
 
         CaseHelper._delete_case(case_id)
 
@@ -52,8 +52,8 @@ class TestCaseRoutes (unittest.TestCase):
 
         response = client.get('/case/{}'.format(randint(1, 9999999)))
 
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert response.data.decode() == self.no_resource_text
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.data.decode(), self.no_resource_text)
 
     @with_context
     @with_client
@@ -62,11 +62,11 @@ class TestCaseRoutes (unittest.TestCase):
 
         response = client.get('/case/{}'.format(case_id))
 
-        assert response.status_code == status.HTTP_200_OK
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         Case.delete(case_id)
 
         response = client.get('/case/{}'.format(case_id))
 
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert response.data.decode() == self.no_resource_text
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.data.decode(), self.no_resource_text)
