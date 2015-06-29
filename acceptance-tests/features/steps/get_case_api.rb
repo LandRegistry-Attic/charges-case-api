@@ -1,5 +1,5 @@
 Given(/^I have created a case$/) do
-  puts create_case_data('new_case')
+  $case = create_case_data('new_case')
 end
 
 When(/^I call the case API$/) do
@@ -8,10 +8,13 @@ When(/^I call the case API$/) do
 end
 
 Then(/^the correct case details are returned$/) do
-  assert_match('id', $apiData[1234], 'Couldnt find text bla')
-  assert_match('status', $apiData['bla'], 'Couldnt find text bla')
-  assert_match('created_on', $apiData[Date.parse('bla')], 'Couldnt find text bla')
-  assert_match('last_updated', $apiData[Date.parse('bla')], 'Couldnt find text bla')
-  assert_match('deed_id', $apiData[1234], 'Couldnt find text bla')
-  assert_match('conveyancer_id', $apiData[1234], 'Couldnt find text bla')
+  targetCase = $apiData.select { |obj| obj['id'] == $case['id'] }.first
+
+  assert_equal($case['id'], targetCase['id'], 'IDs don\'t match')
+  assert_equal($case['status'], targetCase['status'])
+  assert_equal($case['created_on'], targetCase['created_on'])
+  assert_equal($case['last_updated'], targetCase['last_updated'])
+  assert_equal($case['deed_id'], targetCase['deed_id'])
+  assert_equal($case['conveyancer_id'], targetCase['conveyancer_id'])
+  delete_case_data($case['id'])
 end
