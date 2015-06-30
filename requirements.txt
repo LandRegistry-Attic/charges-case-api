@@ -6,4 +6,5 @@ Flask-API
 gunicorn
 alembic
 psycopg2
+flake8
 python-dateutil
