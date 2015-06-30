@@ -33,7 +33,7 @@ def register_routes(blueprint):
             print(str(type(inst)) + ":" + str(inst))
             raise exceptions.NotAcceptable()
 
-        return case.to_json(), status.HTTP_200_OK
+        return case.to_json(), status.HTTP_201_CREATED
 
     @blueprint.route('/case/<id_>', methods=['DELETE'])
     def delete_case(id_):
