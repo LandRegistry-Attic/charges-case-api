@@ -10,7 +10,7 @@ def create_case_data(case_file)
   request.body = "#{case_json}"
   ### Execute the created request against the case API and return the response
   response = connection.request(request)
-  if response.code == "200"
+  if response.code == "201"
     JSON.parse(response.body)
   else
     raise "Failed to create case with json #{case_json}. Got response #{response.code} - #{response.body}"
