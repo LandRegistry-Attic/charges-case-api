@@ -22,10 +22,11 @@ def register_routes(blueprint):
 
     @blueprint.route('/case', methods=['POST'])
     def create_case():
-        case_json = request.data
-        case_json["type"] = "Case"
 
-        case = Case.from_json(case_json)
+        case = Case(
+            request.data['conveyancer_id'],
+            request.data['deed_id']
+        )
 
         try:
             case.save()
