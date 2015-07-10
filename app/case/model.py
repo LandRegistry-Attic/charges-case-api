@@ -2,6 +2,7 @@ from app.db import db
 from app.helper.serialize import serialize_datetime
 from app import json
 from dateutil.parser import parse
+from datetime import datetime
 
 
 class Case(db.Model, json.Serialisable):
@@ -14,6 +15,26 @@ class Case(db.Model, json.Serialisable):
     status = db.Column(db.String())
     last_updated = db.Column(db.DateTime())
     created_on = db.Column(db.DateTime())
+
+    def __init__(self,
+                 conveyancer_id,
+                 deed_id,
+                 status='Created',
+                 last_updated=None,
+                 created_on=None):
+        self.deed_id = deed_id
+        self.conveyancer_id = conveyancer_id
+        self.status = status
+
+        if last_updated is not None:
+            self.last_updated = last_updated
+        else:
+            self.last_updated = datetime.now()
+
+        if created_on is not None:
+            self.created_on = created_on
+        else:
+            self.created_on = datetime.now()
 
     def save(self):
         db.session.add(self)
@@ -66,10 +87,11 @@ class Case(db.Model, json.Serialisable):
         _last_updated = dct.get('last_updated')
         _created_on = dct.get('created_on')
 
-        case = Case()
+        case = Case(
+            _conveyancer_id,
+            _deed_id,
+        )
         case.id = _id
-        case.deed_id = _deed_id
-        case.conveyancer_id = _conveyancer_id
         case.status = _status
         case.last_updated = parse(_last_updated)
         case.created_on = parse(_created_on)
