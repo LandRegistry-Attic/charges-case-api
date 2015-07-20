@@ -4,7 +4,8 @@ class case_api (
     $host = '0.0.0.0',
     $source = 'git://github.com/LandRegistry/charges-case-api',
     $branch_or_revision = 'master',
-    $domain = 'case-api.*',
+    $subdomain = 'case-api',
+    $domain = undef,
     $owner = 'vagrant',
     $group = 'vagrant'
 ) {
@@ -73,4 +74,7 @@ class case_api (
     password => postgresql_password($owner, 'dapassword'),
   }
 
+  if $environment == 'development' {
+    standard_env::dev_host { $subdomain: }
+  }
 }
