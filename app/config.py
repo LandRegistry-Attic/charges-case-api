@@ -2,4 +2,4 @@ import os
 
 DEBUG = True
 
-SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', '')
+SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'postgres:///case-api')
