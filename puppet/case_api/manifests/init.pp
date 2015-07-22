@@ -67,7 +67,7 @@ class case_api (
     notify  => Service['nginx'],
   }
 
-  standard_env::db::postgres { 'charges':
+  standard_env::db::postgres { $module_name:
     user     => $owner,
     password => $owner,
   }
