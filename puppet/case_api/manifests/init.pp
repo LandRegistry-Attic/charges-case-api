@@ -10,8 +10,6 @@ class case_api (
     $group = 'vagrant'
 ) {
   require ::standard_env
-  require ::postgresql::server
-  require ::postgresql::lib::devel
 
   vcsrepo { "/opt/${module_name}":
     ensure   => latest,
@@ -56,7 +54,7 @@ class case_api (
       File["/opt/${module_name}/bin/run.sh"],
       File["/etc/systemd/system/${module_name}.service"],
       File["/var/run/${module_name}"],
-      Postgresql::Server::Db['charges'],
+      Standard_env::Db::Postgres[$module_name],
     ],
   }
 
@@ -69,9 +67,9 @@ class case_api (
     notify  => Service['nginx'],
   }
 
-  postgresql::server::db { 'charges':
+  standard_env::db::postgres { $module_name:
     user     => $owner,
-    password => postgresql_password($owner, 'dapassword'),
+    password => $owner,
   }
 
   if $environment == 'development' {
