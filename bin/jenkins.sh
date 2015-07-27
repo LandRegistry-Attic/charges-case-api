@@ -15,9 +15,9 @@ pip install -r requirements_test.txt
 #ensure submodules are cloned
 git submodule update --init
 
-DATABASE_URI=postgres:///case-api python run.py db upgrade head
+DATABASE_URI=postgres:///case_api python run.py db upgrade head
 
-DATABASE_URI=postgres:///case-api coverage run --source=app tests.py --xml
+DATABASE_URI=postgres:///case_api coverage run --source=app tests.py --xml
 
 test_pass=$?
 
