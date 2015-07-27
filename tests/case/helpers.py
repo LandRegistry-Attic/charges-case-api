@@ -27,7 +27,7 @@ class CaseHelper:
 
         case.save()
 
-        return case.id
+        return case
 
     @staticmethod
     def _create_case():
