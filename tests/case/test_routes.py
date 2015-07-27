@@ -75,7 +75,7 @@ class TestCaseRoutes (unittest.TestCase):
     def test_update_case_status_route(self, client):
         case = CaseHelper._create_case_db()
 
-        case_status = 'Signed'
+        case_status = 'Deed signed'
         response = client.post('/case/' + str(case.deed_id) + '/status',
                                data={"status": case_status})
 
@@ -105,7 +105,7 @@ class TestCaseRoutes (unittest.TestCase):
     def test_update_case_status_route_case_not_found(self, client):
         case = CaseHelper._create_case_db()
 
-        case_status = 'Signed'
+        case_status = 'Deed signed'
         response = client.post('/case/' + str(case.deed_id + 1) + '/status',
                                data={'status': case_status})
 

@@ -19,7 +19,7 @@ class Case(db.Model, json.Serialisable):
     def __init__(self,
                  conveyancer_id,
                  deed_id,
-                 status='Created',
+                 status='Case created',
                  last_updated=None,
                  created_on=None):
         self.deed_id = deed_id
@@ -104,5 +104,5 @@ class Case(db.Model, json.Serialisable):
 
     @staticmethod
     def is_case_status_valid(case_status):
-        valid_statuses = ['Case created', 'Deed created', 'Signed']
+        valid_statuses = ['Case created', 'Deed created', 'Deed signed']
         return case_status in valid_statuses

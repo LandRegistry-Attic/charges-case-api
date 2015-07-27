@@ -86,7 +86,7 @@ class TestCaseModel (unittest.TestCase):
 
     @with_context
     def test_is_case_status_valid_positive(self):
-        self.assertTrue(Case.is_case_status_valid("Signed"))
+        self.assertTrue(Case.is_case_status_valid("Deed signed"))
 
     @with_context
     def test_is_case_status_valid_negative(self):
