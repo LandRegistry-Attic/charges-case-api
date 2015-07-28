@@ -112,3 +112,18 @@ class TestCaseRoutes (unittest.TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
         CaseHelper._delete_case(case.id)
+
+    @with_context
+    @with_client
+    def test_update_case_with_deed_id(self, client):
+        case = CaseHelper._create_case_db()
+
+        new_deed_id = 12
+        response = client.post(
+            '/case/{case_id}/deed'.format(case_id=case.id),
+            data={'deed_id': new_deed_id}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        updated_case = Case.get(case.id)
+        self.assertEqual(updated_case.deed_id, new_deed_id)
