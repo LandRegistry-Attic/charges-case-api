@@ -19,7 +19,7 @@ class Case(db.Model, json.Serialisable):
     def __init__(self,
                  conveyancer_id,
                  deed_id,
-                 status='Created',
+                 status='Case created',
                  last_updated=None,
                  created_on=None):
         self.deed_id = deed_id
@@ -47,6 +47,10 @@ class Case(db.Model, json.Serialisable):
     @staticmethod
     def get(id_):
         return Case.query.filter_by(id=id_).first()
+
+    @staticmethod
+    def get_by_deed_id(deed_id):
+        return Case.query.filter_by(deed_id=deed_id).first()
 
     @staticmethod
     def delete(id_):
@@ -97,3 +101,8 @@ class Case(db.Model, json.Serialisable):
         case.created_on = parse(_created_on)
 
         return case
+
+    @staticmethod
+    def is_case_status_valid(case_status):
+        valid_statuses = ['Case created', 'Deed created', 'Deed signed']
+        return case_status in valid_statuses
