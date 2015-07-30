@@ -64,3 +64,16 @@ def register_routes(blueprint):
             return jsonify(case_status=case_status), status.HTTP_200_OK
         else:
             abort(status.HTTP_400_BAD_REQUEST)
+
+    @blueprint.route('/case/<case_id>/deed', methods=['POST'])
+    def update_case_deed(case_id):
+        case = Case.get(case_id)
+
+        if case is None:
+            abort(status.HTTP_404_NOT_FOUND)
+
+        deed_id = request.data['deed_id']
+        case.deed_id = deed_id
+
+        case.save()
+        return str(status.HTTP_200_OK)
