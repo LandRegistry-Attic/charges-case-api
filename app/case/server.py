@@ -24,7 +24,8 @@ def register_routes(blueprint):
     def create_case():
 
         case = Case(
-            request.data['conveyancer_id']
+            request.data['conveyancer_id'],
+            case_ref=request.data.get('case_ref')
         )
 
         try:
