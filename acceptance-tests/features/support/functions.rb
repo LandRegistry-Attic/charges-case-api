@@ -18,9 +18,11 @@ def create_case_data(case_file)
 end
 
 def delete_case_data(case_id)
-  url = URI.parse($CASE_API_URL + "/case/" + case_id.to_s)
-  connection = Net::HTTP.new(url.host, url.port)
-  request = Net::HTTP::Delete.new(url)
-  response = connection.request(request)
-  response.body
+  response = HTTP.delete($CASE_API_URL + '/case/' + case_id.to_s)
+  if response.code == 200
+    puts "Case #{case_id} has been deleted."
+  else
+    fail "Error: Couldn't delete case #{case_id}, "\
+            "received response #{response.code}."
+  end
 end

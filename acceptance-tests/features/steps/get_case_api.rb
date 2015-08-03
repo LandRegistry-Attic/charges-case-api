@@ -16,5 +16,4 @@ Then(/^the correct case details are returned$/) do
   assert_equal($case['last_updated'], targetCase['last_updated'])
   assert_equal($case['deed_id'], targetCase['deed_id'])
   assert_equal($case['conveyancer_id'], targetCase['conveyancer_id'])
-  delete_case_data($case['id'])
 end
