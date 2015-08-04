@@ -12,6 +12,8 @@ class TestCaseRoutes(unittest.TestCase):
     no_resource_text = '{"message":' \
                        ' "This resource does not exist."}'
 
+    DEED_ID = 24
+
     def setUp(self):
         setUpApp(self)
         setUpDB(self)
@@ -72,7 +74,8 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route(self, client):
-        case = CaseHelper._create_case_db(deed_id=24)
+        case = CaseHelper._create_case_db()
+        CaseHelper._update_case_deed_id(case.id, self.DEED_ID)
 
         case_status = 'Deed signed'
         response = client.post('/case/' + str(case.deed_id) + '/status',
@@ -89,7 +92,8 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route_invalid_status(self, client):
-        case = CaseHelper._create_case_db(deed_id=24)
+        case = CaseHelper._create_case_db()
+        CaseHelper._update_case_deed_id(case.id, self.DEED_ID)
 
         case_status = 'Invalid'
         response = client.post('/case/' + str(case.deed_id) + '/status',
@@ -102,7 +106,8 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route_case_not_found(self, client):
-        case = CaseHelper._create_case_db(deed_id=24)
+        case = CaseHelper._create_case_db()
+        CaseHelper._update_case_deed_id(case.id, self.DEED_ID)
 
         case_status = 'Deed signed'
         response = client.post('/case/20/status',
@@ -117,14 +122,13 @@ class TestCaseRoutes(unittest.TestCase):
     def test_update_case_deed_route(self, client):
         case = CaseHelper._create_case_db()
 
-        deed_id = '24'
         response = client.post('/case/' + str(case.id) + '/deed',
-                               data={'deed_id': deed_id})
+                               data={'deed_id': self.DEED_ID})
 
         updated_case = client.get('/case/{}'.format(case.id))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('"deed_id": {}'.format(deed_id),
+        self.assertIn('"deed_id": {}'.format(self.DEED_ID),
                       updated_case.data.decode())
         self.assertIn('"status": "{}"'.format('Deed created'),
                       updated_case.data.decode())
@@ -159,11 +163,11 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_deed_route_deed_id_already_set(self, client):
-        case = CaseHelper._create_case_db(deed_id=24)
+        case = CaseHelper._create_case_db()
+        CaseHelper._update_case_deed_id(case.id, self.DEED_ID)
 
-        deed_id = '24'
         response = client.post('/case/' + str(case.id) + '/deed',
-                               data={'deed_id': deed_id})
+                               data={'deed_id': 10})
 
         self.assertEqual(response.status_code,
                          status.HTTP_403_FORBIDDEN)

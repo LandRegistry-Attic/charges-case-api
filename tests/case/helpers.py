@@ -11,24 +11,17 @@ class CaseHelper:
     _created_on = datetime.today()
 
     @staticmethod
-    def _create_case_db(deed_id=None):
-        CaseHelper._id = randint(1, 999999)
-
-        _case_dict = {"type": "Case",
-                      "id": CaseHelper._id,
-                      "conveyancer_id": CaseHelper._conveyancer_id,
-                      "status": CaseHelper._status,
-                      "last_updated": CaseHelper._last_updated.isoformat(),
-                      "created_on": CaseHelper._created_on.isoformat()}
-
-        if deed_id is not None:
-            _case_dict['deed_id'] = deed_id
-
-        case = Case.from_json(_case_dict)
-
+    def _create_case_and_save():
+        case = CaseHelper._create_case()
         case.save()
 
         return case
+
+    @staticmethod
+    def _update_case_deed_id(case_id, deed_id):
+        case = Case.get(case_id)
+        case.deed_id = deed_id
+        case.save()
 
     @staticmethod
     def _create_case():
