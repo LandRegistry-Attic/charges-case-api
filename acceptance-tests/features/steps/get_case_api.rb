@@ -13,4 +13,5 @@ Then(/^the correct case details are returned$/) do
   assert_equal(@case['last_updated'], @retrievedCase['last_updated'])
   assert_equal(@case['deed_id'], @retrievedCase['deed_id'])
   assert_equal(@case['conveyancer_id'], @retrievedCase['conveyancer_id'])
+  assert_equal(@case['case_ref'], @retrievedCase['case_ref'])
 end
