@@ -8,7 +8,17 @@ def create_case_data
     JSON.parse(response.body)
   else
     fail "Error: Couldn't create case #{case_json}, "\
-            "Received response #{response.code}"
+            "received response #{response.code}"
+  end
+end
+
+def get_case_data(case_id)
+  response = HTTP.get($CASE_API_URL + '/case/' + case_id.to_s)
+  if response.code == 200
+    JSON.parse(response.body)
+  else
+    fail "Error: Couldn't retrieve case #{case_id}, "\
+            "received response #{response.code}"
   end
 end
 

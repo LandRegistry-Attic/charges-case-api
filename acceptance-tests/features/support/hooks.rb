@@ -11,8 +11,8 @@ end
 
 ### Code that should be executed once all of the acceptance tests have run.
 After do |scenario|
-  if $case['id']
-    puts "Deleting test case #{$case['id']}"
-    delete_case_data($case['id'])
+  if @case['id']
+    puts "Deleting test case #{@case['id']}..."
+    delete_case_data(@case['id'])
   end
 end
