@@ -53,7 +53,6 @@ class TestCaseModel (unittest.TestCase):
         case_as_json = case.to_json()
 
         self.assertEqual(case_as_json["id"], CaseHelper._id)
-        self.assertEqual(case_as_json["deed_id"], CaseHelper._deed_id)
         self.assertEqual(case_as_json["conveyancer_id"],
                          CaseHelper._conveyancer_id)
         self.assertEqual(case_as_json["status"], CaseHelper._status)
@@ -67,7 +66,6 @@ class TestCaseModel (unittest.TestCase):
         case = CaseHelper._create_case()
 
         self.assertEqual(case.id, CaseHelper._id)
-        self.assertEqual(case.deed_id, CaseHelper._deed_id)
         self.assertEqual(case.conveyancer_id, CaseHelper._conveyancer_id)
         self.assertEqual(case.status, CaseHelper._status)
         self.assertEqual(case.last_updated, CaseHelper._last_updated)
@@ -78,7 +76,6 @@ class TestCaseModel (unittest.TestCase):
         case = CaseHelper._create_case()
 
         self.assertEqual(case.id, CaseHelper._id)
-        self.assertEqual(case.deed_id, CaseHelper._deed_id)
         self.assertEqual(case.conveyancer_id, CaseHelper._conveyancer_id)
         self.assertEqual(case.status, CaseHelper._status)
         self.assertEqual(case.last_updated, CaseHelper._last_updated)

@@ -24,8 +24,7 @@ def register_routes(blueprint):
     def create_case():
 
         case = Case(
-            request.data['conveyancer_id'],
-            request.data['deed_id']
+            request.data['conveyancer_id']
         )
 
         try:
@@ -71,6 +70,9 @@ def register_routes(blueprint):
 
         if case is None:
             abort(status.HTTP_404_NOT_FOUND)
+
+        if case.deed_id is not None:
+            abort(status.HTTP_403_FORBIDDEN)
 
         deed_id = request.data['deed_id']
         case.deed_id = deed_id

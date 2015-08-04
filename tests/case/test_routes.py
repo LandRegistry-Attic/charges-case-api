@@ -72,7 +72,7 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route(self, client):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_db(deed_id=24)
 
         case_status = 'Deed signed'
         response = client.post('/case/' + str(case.deed_id) + '/status',
@@ -89,7 +89,7 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route_invalid_status(self, client):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_db(deed_id=24)
 
         case_status = 'Invalid'
         response = client.post('/case/' + str(case.deed_id) + '/status',
@@ -102,10 +102,10 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_update_case_status_route_case_not_found(self, client):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_db(deed_id=24)
 
         case_status = 'Deed signed'
-        response = client.post('/case/' + str(case.deed_id + 1) + '/status',
+        response = client.post('/case/20/status',
                                data={'status': case_status})
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -153,5 +153,19 @@ class TestCaseRoutes(unittest.TestCase):
 
         self.assertEqual(response.status_code,
                          status.HTTP_400_BAD_REQUEST)
+
+        CaseHelper._delete_case(case.id)
+
+    @with_context
+    @with_client
+    def test_update_case_deed_route_deed_id_already_set(self, client):
+        case = CaseHelper._create_case_db(deed_id=24)
+
+        deed_id = '24'
+        response = client.post('/case/' + str(case.id) + '/deed',
+                               data={'deed_id': deed_id})
+
+        self.assertEqual(response.status_code,
+                         status.HTTP_403_FORBIDDEN)
 
         CaseHelper._delete_case(case.id)
