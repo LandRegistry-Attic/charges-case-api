@@ -1,8 +1,5 @@
-def create_case_data
-  case_json = {
-    'conveyancer_id' => '1',
-    'case_ref' => '1'
-  }
+def create_case_data(case_json)
+  case_json = JSON.parse(case_json)
   response = HTTP.post($CASE_API_URL + '/case', json: case_json)
   if response.code == 201
     JSON.parse(response.body)

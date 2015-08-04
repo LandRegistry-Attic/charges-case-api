@@ -1,5 +1,5 @@
-Given(/^I have created a case$/) do
-  @case = create_case_data
+Given(/^I have created the following case:$/) do |case_json|
+  @case = create_case_data(case_json)
 end
 
 When(/^I call the case API$/) do

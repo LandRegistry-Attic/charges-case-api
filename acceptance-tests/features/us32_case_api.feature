@@ -14,7 +14,23 @@ Acceptance Criteria:
       - created at(datetime)
       - conveyancer id(int)
 
+Scenario: Create case on case API
+    When I have created the following case:
+    """
+    {
+      "conveyancer_id": "1",
+      "case_ref": "ABC123"
+    }
+    """
+    Then the correct response is returned
+
 Scenario: Retrieve case from case API
-    Given I have created a case
+    Given I have created the following case:
+    """
+    {
+      "conveyancer_id": "1",
+      "case_ref": "DEF456"
+    }
+    """
     When I call the case API
     Then the correct case details are returned
