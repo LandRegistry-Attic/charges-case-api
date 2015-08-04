@@ -1,5 +1,5 @@
 Given(/^I have created a case$/) do
-  $case = create_case_data('new_case')
+  $case = create_case_data
 end
 
 When(/^I call the case API$/) do

@@ -4,4 +4,4 @@
 ### need to change every test when switching environments for example.       ###
 ################################################################################
 
-$CASE_API_URL = (ENV['CHARGES_API_URL'] || 'http://case-api.dev.service.gov.uk')
+$CASE_API_URL = (ENV['CASE_API_URL'] || 'http://case-api.dev.service.gov.uk')
