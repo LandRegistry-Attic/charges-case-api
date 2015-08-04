@@ -16,7 +16,7 @@ class TestCaseModel (unittest.TestCase):
 
     @with_context
     def test_get_all(self):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_and_save()
         case = Case.get(case.id)
 
         self.assertIn(case, Case.all())
@@ -27,7 +27,7 @@ class TestCaseModel (unittest.TestCase):
 
     @with_context
     def test_get(self):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_and_save()
         case = Case.get(case.id)
 
         self.assertEqual(case.id, case.id)
@@ -36,7 +36,7 @@ class TestCaseModel (unittest.TestCase):
 
     @with_context
     def test_delete(self):
-        case = CaseHelper._create_case_db()
+        case = CaseHelper._create_case_and_save()
         case = Case.get(case.id)
 
         self.assertEqual(case.id, CaseHelper._id)
