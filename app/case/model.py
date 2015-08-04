@@ -22,16 +22,14 @@ class Case(db.Model, json.Serialisable):
                  status='Case created',
                  last_updated=None,
                  created_on=None,
-                 case_ref=None):
+                 case_ref=''):
 
         if deed_id is not None:
             self.deed_id = deed_id
 
         self.conveyancer_id = conveyancer_id
         self.status = status
-
-        if case_ref is not None:
-            self.case_ref = case_ref
+        self.case_ref = case_ref
 
         if last_updated is not None:
             self.last_updated = last_updated
