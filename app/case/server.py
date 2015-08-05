@@ -1,10 +1,10 @@
 from app.case.model import Case
 from flask.ext.api import exceptions, status
 from flask import request, abort, jsonify
+from datetime import datetime
 
 
 def register_routes(blueprint):
-
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
         stuff = [case.to_json() for case in Case.all()]
@@ -24,8 +24,7 @@ def register_routes(blueprint):
     def create_case():
 
         case = Case(
-            request.data['conveyancer_id'],
-            request.data['deed_id']
+            request.data['conveyancer_id']
         )
 
         try:
@@ -64,3 +63,26 @@ def register_routes(blueprint):
             return jsonify(case_status=case_status), status.HTTP_200_OK
         else:
             abort(status.HTTP_400_BAD_REQUEST)
+
+    @blueprint.route('/case/<case_id>/deed', methods=['POST'])
+    def update_case_deed(case_id):
+        case = Case.get(case_id)
+
+        if case is None:
+            abort(status.HTTP_404_NOT_FOUND)
+
+        if case.deed_id is not None:
+            abort(status.HTTP_403_FORBIDDEN)
+
+        deed_id = request.data['deed_id']
+        case.deed_id = deed_id
+        case.last_updated = datetime.now()
+        case.status = 'Deed created'
+
+        try:
+            case.save()
+        except Exception as inst:
+            print(str(type(inst)) + ":" + str(inst))
+            raise abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return case.to_json(), status.HTTP_200_OK

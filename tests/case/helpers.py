@@ -5,29 +5,23 @@ from datetime import datetime
 
 class CaseHelper:
     _id = randint(1, 999999)
-    _deed_id = 1
     _conveyancer_id = 1
     _status = "the status"
     _last_updated = datetime.today()
     _created_on = datetime.today()
 
     @staticmethod
-    def _create_case_db():
-        CaseHelper._id = randint(1, 999999)
-
-        _case_dict = {"type": "Case",
-                      "id": CaseHelper._id,
-                      "deed_id": CaseHelper._deed_id,
-                      "conveyancer_id": CaseHelper._conveyancer_id,
-                      "status": CaseHelper._status,
-                      "last_updated": CaseHelper._last_updated.isoformat(),
-                      "created_on": CaseHelper._created_on.isoformat()}
-
-        case = Case.from_json(_case_dict)
-
+    def _create_case_and_save():
+        case = CaseHelper._create_case()
         case.save()
 
         return case
+
+    @staticmethod
+    def _update_case_deed_id(case_id, deed_id):
+        case = Case.get(case_id)
+        case.deed_id = deed_id
+        case.save()
 
     @staticmethod
     def _create_case():
@@ -35,7 +29,6 @@ class CaseHelper:
 
         _case_dict = {"type": "Case",
                       "id": CaseHelper._id,
-                      "deed_id": CaseHelper._deed_id,
                       "conveyancer_id": CaseHelper._conveyancer_id,
                       "status": CaseHelper._status,
                       "last_updated": CaseHelper._last_updated.isoformat(),

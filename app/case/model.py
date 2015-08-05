@@ -6,7 +6,6 @@ from datetime import datetime
 
 
 class Case(db.Model, json.Serialisable):
-
     __tablename__ = 'case'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,11 +17,14 @@ class Case(db.Model, json.Serialisable):
 
     def __init__(self,
                  conveyancer_id,
-                 deed_id,
+                 deed_id=None,
                  status='Case created',
                  last_updated=None,
                  created_on=None):
-        self.deed_id = deed_id
+
+        if deed_id is not None:
+            self.deed_id = deed_id
+
         self.conveyancer_id = conveyancer_id
         self.status = status
 
