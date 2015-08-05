@@ -35,8 +35,13 @@ Scenario: Retrieve case from case API
     """
     {
       "conveyancer_id": "1",
-      "case_ref": "DEF456"
+      "deed_id": "1"
     }
     """
     When I call the case API
-    Then the correct case details are returned
+    Then the returned "id" matches the one created
+    And the returned "deed_id" matches the one created
+    And the returned "conveyancer_id" matches the one created
+    And the returned "status" matches the one created
+    And the returned "created_on" matches the one created
+    And the returned "last_updated" matches the one created
