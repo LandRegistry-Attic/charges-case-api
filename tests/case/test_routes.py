@@ -173,3 +173,36 @@ class TestCaseRoutes(unittest.TestCase):
                          status.HTTP_403_FORBIDDEN)
 
         CaseHelper._delete_case(case.id)
+
+    @with_context
+    @with_client
+    def test_create_case_with_ref_num(self, client):
+        case = {
+            'conveyancer_id': 1,
+            'deed_id': 1,
+            'case_ref': 'abc1234'
+        }
+        response = client.post('/case', data=case)
+        case_json = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(case_json['conveyancer_id'], case['conveyancer_id'])
+        self.assertEqual(case_json['case_ref'], case['case_ref'])
+
+        CaseHelper._delete_case(case_json['id'])
+
+    @with_context
+    @with_client
+    def test_create_case_without_ref_num(self, client):
+        case = {
+            'conveyancer_id': 1,
+            'deed_id': 1,
+        }
+        response = client.post('/case', data=case)
+        case_json = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(case_json['conveyancer_id'], case['conveyancer_id'])
+        self.assertNotIn('case_ref', case_json)
+
+        CaseHelper._delete_case(case_json['id'])

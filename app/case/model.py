@@ -14,19 +14,22 @@ class Case(db.Model, json.Serialisable):
     status = db.Column(db.String())
     last_updated = db.Column(db.DateTime())
     created_on = db.Column(db.DateTime())
+    case_ref = db.Column(db.String())
 
     def __init__(self,
                  conveyancer_id,
                  deed_id=None,
                  status='Case created',
                  last_updated=None,
-                 created_on=None):
+                 created_on=None,
+                 case_ref=''):
 
         if deed_id is not None:
             self.deed_id = deed_id
 
         self.conveyancer_id = conveyancer_id
         self.status = status
+        self.case_ref = case_ref
 
         if last_updated is not None:
             self.last_updated = last_updated
@@ -82,6 +85,7 @@ class Case(db.Model, json.Serialisable):
                lambda obj: serialize_datetime(obj.last_updated))
         append('created_on',
                lambda obj: serialize_datetime(obj.created_on))
+        append('case_ref', lambda obj: obj.case_ref)
 
         return jsondata
 
@@ -92,6 +96,7 @@ class Case(db.Model, json.Serialisable):
         _status = dct.get('status')
         _last_updated = dct.get('last_updated')
         _created_on = dct.get('created_on')
+        _case_ref = dct.get('case_ref')
 
         case = Case(
             _conveyancer_id,
@@ -101,6 +106,7 @@ class Case(db.Model, json.Serialisable):
         case.status = _status
         case.last_updated = parse(_last_updated)
         case.created_on = parse(_created_on)
+        case.case_ref = str(_case_ref)
 
         return case
 
