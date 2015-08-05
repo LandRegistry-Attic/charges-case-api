@@ -19,10 +19,16 @@ Scenario: Create case on case API
     """
     {
       "conveyancer_id": "1",
-      "case_ref": "ABC123"
+      "deed_id": "1"
     }
     """
-    Then the correct response is returned
+    Then the "id" is returned in the response
+    And the "deed_id" of "1" is returned in the response
+    And the "conveyancer_id" of "1" is returned in the response
+    And the "status" of "Case created" is returned in the response
+    And the "created_on" of todays date is returned in the response
+    And the "last_updated" of todays date is returned in the response
+
 
 Scenario: Retrieve case from case API
     Given I have created the following case:
