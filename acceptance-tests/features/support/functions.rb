@@ -19,6 +19,10 @@ def get_case_data(case_id)
   end
 end
 
+def update_case_status(deed_id, case_status)
+  response = HTTP.post($CASE_API_URL + 'case/' + deed_id + '/status')
+end
+
 def delete_case_data(case_id)
   response = HTTP.delete($CASE_API_URL + '/case/' + case_id.to_s)
   if response.code == 200

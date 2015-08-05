@@ -45,3 +45,13 @@ Scenario: Retrieve case from case API
     And the returned "status" matches the one created
     And the returned "created_on" matches the one created
     And the returned "last_updated" matches the one created
+
+Scenario: Update case status on case API
+  Given I have created the following case:
+  """
+  {
+    "conveyancer_id": "1",
+    "deed_id": "1"
+  }
+  """
+  When I update the case status to "Deed created"
