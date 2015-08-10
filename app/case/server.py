@@ -60,6 +60,7 @@ def register_routes(blueprint):
         case.status = case_status
 
         if Case.is_case_status_valid(case_status):
+            case.last_updated = datetime.now()
             case.save()
             return jsonify(case_status=case_status), status.HTTP_200_OK
         else:

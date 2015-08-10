@@ -179,7 +179,6 @@ class TestCaseRoutes(unittest.TestCase):
     def test_create_case_with_ref_num(self, client):
         case = {
             'conveyancer_id': 1,
-            'deed_id': 1,
             'case_ref': 'abc1234'
         }
         response = client.post('/case', data=case)
@@ -195,8 +194,7 @@ class TestCaseRoutes(unittest.TestCase):
     @with_client
     def test_create_case_without_ref_num(self, client):
         case = {
-            'conveyancer_id': 1,
-            'deed_id': 1,
+            'conveyancer_id': 1
         }
         response = client.post('/case', data=case)
         case_json = json.loads(response.data.decode())
