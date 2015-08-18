@@ -41,3 +41,9 @@ class CaseHelper:
     @staticmethod
     def _delete_case(_id):
         Case.delete(_id)
+
+    @staticmethod
+    def _update_status(case_id, status):
+        case = Case.get(case_id)
+        case.status = status
+        case.save()

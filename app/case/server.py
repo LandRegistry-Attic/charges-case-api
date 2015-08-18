@@ -1,6 +1,6 @@
 from app.case.model import Case
 from flask.ext.api import exceptions, status
-from flask import request, abort, jsonify
+from flask import request, abort
 from datetime import datetime
 
 
@@ -62,7 +62,7 @@ def register_routes(blueprint):
         if Case.is_case_status_valid(case_status):
             case.last_updated = datetime.now()
             case.save()
-            return jsonify(case_status=case_status), status.HTTP_200_OK
+            return {'case_status': case_status}, status.HTTP_200_OK
         else:
             abort(status.HTTP_400_BAD_REQUEST)
 
@@ -85,6 +85,27 @@ def register_routes(blueprint):
             case.save()
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
-            raise abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
+            abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return case.to_json(), status.HTTP_200_OK
+
+    @blueprint.route('/case/<case_id>/application', methods=['POST'])
+    def submit(case_id):
+        case = Case.get(case_id)
+
+        if case is None:
+            abort(status.HTTP_404_NOT_FOUND)
+
+        if case.status != 'Completion confirmed':
+            abort(status.HTTP_403_FORBIDDEN)
+
+        case.status = 'Submitted'
+        case.last_updated = datetime.now()
+
+        try:
+            case.save()
+        except Exception as inst:
+            print(str(type(inst)) + ":" + str(inst))
+            abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return case.to_json(), status.HTTP_200_OK

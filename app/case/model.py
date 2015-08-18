@@ -113,5 +113,5 @@ class Case(db.Model, json.Serialisable):
     @staticmethod
     def is_case_status_valid(case_status):
         valid_statuses = ['Case created', 'Deed created', 'Deed signed',
-                          'Completion confirmed']
+                          'Completion confirmed', 'Submitted']
         return case_status in valid_statuses
