@@ -9,7 +9,8 @@ def register_routes(blueprint):
     def get_cases():
         stuff = [case.to_json() for case in Case.all()]
 
-        print(Case.all_with_borrowers())
+        print([[{'case': case.to_json(),
+                 'borrower': borrower.to_json()}] for case, borrower in Case.all_with_borrowers()])
 
         return stuff
 
