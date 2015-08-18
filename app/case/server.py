@@ -1,4 +1,5 @@
 from app.case.model import Case
+from app.borrower.model import Borrower
 from flask.ext.api import exceptions, status
 from flask import request, abort
 from datetime import datetime
