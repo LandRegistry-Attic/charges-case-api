@@ -1,5 +1,4 @@
 from app.case.model import Case
-from app.borrower.model import Borrower
 from flask.ext.api import exceptions, status
 from flask import request, abort
 from datetime import datetime
@@ -9,6 +8,8 @@ def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
         stuff = [case.to_json() for case in Case.all()]
+
+        print(Case.all_with_borrowers())
 
         return stuff
 
