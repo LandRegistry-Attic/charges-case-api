@@ -27,7 +27,7 @@ class BorrowerHelper:
                             BorrowerHelper._mobile_no,
                             BorrowerHelper._email_address,
                             BorrowerHelper._address)
-        borrower.id = randint(1, 999999)
+        borrower.id = BorrowerHelper._id
 
         return borrower
 

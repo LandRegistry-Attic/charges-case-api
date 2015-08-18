@@ -60,6 +60,7 @@ class TestCaseModel (unittest.TestCase):
             CaseHelper._last_updated.isoformat()))
         self.assertEqual(case_as_json["created_on"], serialize_datetime(
             CaseHelper._created_on.isoformat()))
+        self.assertEqual(case_as_json["borrowers"], CaseHelper._borrowers)
 
     @with_context
     def test_from_json(self):
@@ -70,16 +71,7 @@ class TestCaseModel (unittest.TestCase):
         self.assertEqual(case.status, CaseHelper._status)
         self.assertEqual(case.last_updated, CaseHelper._last_updated)
         self.assertEqual(case.created_on, CaseHelper._created_on)
-
-    @with_context
-    def test_model(self):
-        case = CaseHelper._create_case()
-
-        self.assertEqual(case.id, CaseHelper._id)
-        self.assertEqual(case.conveyancer_id, CaseHelper._conveyancer_id)
-        self.assertEqual(case.status, CaseHelper._status)
-        self.assertEqual(case.last_updated, CaseHelper._last_updated)
-        self.assertEqual(case.created_on, CaseHelper._created_on)
+        self.assertEqual(case.borrowers, CaseHelper._borrowers)
 
     @with_context
     def test_is_case_status_valid_positive(self):

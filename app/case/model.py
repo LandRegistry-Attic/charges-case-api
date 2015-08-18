@@ -1,4 +1,4 @@
-from app.db import db
+from app.db import db, array_type
 from app.helper.serialize import serialize_datetime
 from app import json
 from dateutil.parser import parse
@@ -15,6 +15,7 @@ class Case(db.Model, json.Serialisable):
     last_updated = db.Column(db.DateTime())
     created_on = db.Column(db.DateTime())
     case_ref = db.Column(db.String())
+    borrowers = db.Column(array_type(db.Integer))
 
     def __init__(self,
                  conveyancer_id,
@@ -22,7 +23,8 @@ class Case(db.Model, json.Serialisable):
                  status='Case created',
                  last_updated=None,
                  created_on=None,
-                 case_ref=''):
+                 case_ref='',
+                 borrowers=None):
 
         if deed_id is not None:
             self.deed_id = deed_id
@@ -40,6 +42,9 @@ class Case(db.Model, json.Serialisable):
             self.created_on = created_on
         else:
             self.created_on = datetime.now()
+
+        if borrowers is not None:
+            self.borrowers = borrowers
 
     def save(self):
         db.session.add(self)
@@ -86,6 +91,7 @@ class Case(db.Model, json.Serialisable):
         append('created_on',
                lambda obj: serialize_datetime(obj.created_on))
         append('case_ref', lambda obj: obj.case_ref)
+        append('borrowers', lambda obj: obj.borrowers)
 
         return jsondata
 
@@ -97,6 +103,7 @@ class Case(db.Model, json.Serialisable):
         _last_updated = dct.get('last_updated')
         _created_on = dct.get('created_on')
         _case_ref = dct.get('case_ref')
+        _borrowers = dct.get('borrowers')
 
         case = Case(
             _conveyancer_id,
@@ -107,6 +114,7 @@ class Case(db.Model, json.Serialisable):
         case.last_updated = parse(_last_updated)
         case.created_on = parse(_created_on)
         case.case_ref = str(_case_ref)
+        case.borrowers = _borrowers
 
         return case
 
