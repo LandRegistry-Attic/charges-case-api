@@ -50,6 +50,10 @@ class Case(db.Model, json.Serialisable):
         return Case.query.all()
 
     @staticmethod
+    def all_with_borrowers():
+        return Case.query.join("borrower")
+
+    @staticmethod
     def get(id_):
         return Case.query.filter_by(id=id_).first()
 
