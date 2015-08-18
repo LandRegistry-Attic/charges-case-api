@@ -1,9 +1,12 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate, MigrateCommand
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 db = SQLAlchemy()
 migrate = Migrate(db)
+
+array_type = ARRAY
 
 
 def init(app, manager):
