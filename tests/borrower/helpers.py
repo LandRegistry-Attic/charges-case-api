@@ -1,4 +1,5 @@
 from app.borrower.model import Borrower
+from tests.case.helpers import CaseHelper
 from random import randint
 
 
@@ -13,7 +14,10 @@ class BorrowerHelper:
 
     @staticmethod
     def _create_borrower_and_save():
+        case = CaseHelper._create_case_and_save()
+
         borrower = BorrowerHelper._create_borrower()
+        borrower.case_id = case.id
         borrower.save()
 
         return borrower

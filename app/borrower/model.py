@@ -5,6 +5,7 @@ class Borrower(db.Model):
     __tablename__ = 'borrower'
 
     id = db.Column(db.Integer, primary_key=True)
+    case_id = db.Column(db.Integer, db.ForeignKey('case.id'))
     first_name = db.Column(db.String())
     middle_names = db.Column(db.String())
     last_name = db.Column(db.String())
@@ -13,6 +14,7 @@ class Borrower(db.Model):
     address = db.Column(array_type(db.String()))
 
     def __init__(self,
+                 case_id,
                  first_name,
                  last_name,
                  mobile_no,
@@ -23,6 +25,7 @@ class Borrower(db.Model):
         if middle_names is not None:
             self.middle_names = middle_names
 
+        self.case_id = case_id
         self.first_name = first_name
         self.last_name = last_name
         self.mobile_no = mobile_no

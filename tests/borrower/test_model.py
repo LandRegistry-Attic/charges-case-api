@@ -1,4 +1,5 @@
 from tests.borrower.helpers import BorrowerHelper
+from tests.case.helpers import CaseHelper
 from app.borrower.model import Borrower
 import unittest
 from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
