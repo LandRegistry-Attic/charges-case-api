@@ -13,7 +13,6 @@ class Borrower(db.Model):
     address = db.Column(array_type(db.String()))
 
     def __init__(self,
-                 borrower_id,
                  first_name,
                  last_name,
                  mobile_no,
