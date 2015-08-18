@@ -3,6 +3,7 @@ from app.helper.serialize import serialize_datetime
 from app import json
 from dateutil.parser import parse
 from datetime import datetime
+from app.borrower.model import Borrower
 
 
 class Case(db.Model, json.Serialisable):
@@ -51,7 +52,7 @@ class Case(db.Model, json.Serialisable):
 
     @staticmethod
     def all_with_borrowers():
-        return Case.query.join("borrower")
+        return db.session.query(Case, Borrower).outerjoin(Borrower).all()
 
     @staticmethod
     def get(id_):

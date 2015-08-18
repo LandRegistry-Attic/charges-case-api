@@ -1,7 +1,8 @@
 from app.db import db, array_type
+from app import json
 
 
-class Borrower(db.Model):
+class Borrower(db.Model, json.Serialisable):
     __tablename__ = 'borrower'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -53,5 +54,47 @@ class Borrower(db.Model):
 
         db.session.delete(borrower)
         db.session.commit()
+
+        return borrower
+
+    def json_format(self):
+        jsondata = {}
+
+        def append(name, parameter):
+            value = parameter(self)
+            if value is not None:
+                jsondata[name] = value
+
+        append('id', lambda obj: obj.id)
+        append('case_id', lambda obj: obj.case_id)
+        append('first-name', lambda obj: obj.first_name)
+        append('middle-names', lambda obj: obj.middle_names)
+        append('last-name', lambda obj: obj.last_name)
+        append('mobile-no', lambda obj: obj.mobile_no)
+        append('email-address', lambda obj: obj.email_address)
+        append('address', lambda obj: obj.address)
+
+        return jsondata
+
+    def object_hook(dct):
+        _id = dct.get('id')
+        _case_id = dct.get('case_id')
+        _first_name = dct.get('first-name')
+        _middle_names = dct.get('middle-names')
+        _last_name = dct.get('last-name')
+        _mobile_no = dct.get('mobile-no')
+        _email_address = dct.get('email-address')
+        _address = dct.get('address')
+
+        borrower = Borrower(
+            _case_id,
+            _first_name,
+            _middle_names,
+            _last_name,
+            _mobile_no,
+            _email_address,
+            _address
+        )
+        borrower.id = _id
 
         return borrower
