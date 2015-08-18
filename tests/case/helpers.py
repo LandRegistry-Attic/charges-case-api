@@ -9,7 +9,6 @@ class CaseHelper:
     _status = "the status"
     _last_updated = datetime.today()
     _created_on = datetime.today()
-    _borrowers = [1, 2]
 
     @staticmethod
     def _create_case_and_save():
@@ -33,8 +32,7 @@ class CaseHelper:
                       "conveyancer_id": CaseHelper._conveyancer_id,
                       "status": CaseHelper._status,
                       "last_updated": CaseHelper._last_updated.isoformat(),
-                      "created_on": CaseHelper._created_on.isoformat(),
-                      "borrowers": CaseHelper._borrowers}
+                      "created_on": CaseHelper._created_on.isoformat()}
 
         case = Case.from_json(_case_dict)
 
