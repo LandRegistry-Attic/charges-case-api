@@ -1,14 +1,14 @@
 # flake8: noqa
 """empty message
 
-Revision ID: 3ccd1661426
+Revision ID: 492b491629a
 Revises: 5290ef12641
-Create Date: 2015-08-18 13:46:32.804330
+Create Date: 2015-08-19 10:46:47.573630
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '3ccd1661426'
+revision = '492b491629a'
 down_revision = '5290ef12641'
 
 
@@ -28,7 +28,7 @@ def upgrade():
     sa.Column('mobile_no', sa.String(), nullable=True),
     sa.Column('email_address', sa.String(), nullable=True),
     sa.Column('address', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.ForeignKeyConstraint(['case_id'], ['case.id'], ),
+    sa.ForeignKeyConstraint(['case_id'], ['case.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     ### end Alembic commands ###
