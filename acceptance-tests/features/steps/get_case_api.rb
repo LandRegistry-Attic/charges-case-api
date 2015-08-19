@@ -1,7 +1,3 @@
-Given(/^I have created a case$/) do
-  $case = create_case_data('new_case')
-end
-
 When(/^I call the case API$/) do
   response = Net::HTTP.get_response(URI($CASE_API_URL + '/case'))
   $apiData = MultiJson.load(response.body)
