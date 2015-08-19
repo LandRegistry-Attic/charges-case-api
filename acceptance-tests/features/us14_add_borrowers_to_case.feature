@@ -18,7 +18,7 @@ Scenario: Add Borrowers to Case
       | FIRST NAME  | MIDDLE NAME | LAST NAME | ADDRESS                           | MOBILE NUMBER | EMAIL ADDRESS       |
       | Peter       |             | Smith     | 80 Mayorly Place, London, N12 5AZ | 07113889900   | psmith@yahoo.co.uk  |
       | Sarah       | Jane        | Smith     | 83 Lordship Park, London, N16 5UP | 07970112233   | sjsmith@gmail.com   |
-    And I call the case API
+    And I retrieve the created case
     Then the correct borrowers details are returned
 
 Scenario: Add Borrower to Case with Missing Mandatory Information
