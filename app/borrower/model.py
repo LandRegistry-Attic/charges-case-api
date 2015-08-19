@@ -6,7 +6,8 @@ class Borrower(db.Model, json.Serialisable):
     __tablename__ = 'borrower'
 
     id = db.Column(db.Integer, primary_key=True)
-    case_id = db.Column(db.Integer, db.ForeignKey('case.id'))
+    case_id = db.Column(db.Integer,
+                        db.ForeignKey('case.id', ondelete="CASCADE"))
     first_name = db.Column(db.String())
     middle_names = db.Column(db.String())
     last_name = db.Column(db.String())
@@ -35,6 +36,12 @@ class Borrower(db.Model, json.Serialisable):
 
     def save(self):
         db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def add(borrowers):
+        conn = db.session.connection()
+        conn.execute(Borrower.__table__.insert(), borrowers)
         db.session.commit()
 
     @staticmethod
@@ -67,11 +74,11 @@ class Borrower(db.Model, json.Serialisable):
 
         append('id', lambda obj: obj.id)
         append('case_id', lambda obj: obj.case_id)
-        append('first-name', lambda obj: obj.first_name)
-        append('middle-names', lambda obj: obj.middle_names)
-        append('last-name', lambda obj: obj.last_name)
-        append('mobile-no', lambda obj: obj.mobile_no)
-        append('email-address', lambda obj: obj.email_address)
+        append('first_name', lambda obj: obj.first_name)
+        append('middle_names', lambda obj: obj.middle_names)
+        append('last_name', lambda obj: obj.last_name)
+        append('mobile_no', lambda obj: obj.mobile_no)
+        append('email_address', lambda obj: obj.email_address)
         append('address', lambda obj: obj.address)
 
         return jsondata
@@ -79,11 +86,11 @@ class Borrower(db.Model, json.Serialisable):
     def object_hook(dct):
         _id = dct.get('id')
         _case_id = dct.get('case_id')
-        _first_name = dct.get('first-name')
-        _middle_names = dct.get('middle-names')
-        _last_name = dct.get('last-name')
-        _mobile_no = dct.get('mobile-no')
-        _email_address = dct.get('email-address')
+        _first_name = dct.get('first_name')
+        _middle_names = dct.get('middle_names')
+        _last_name = dct.get('last_name')
+        _mobile_no = dct.get('mobile_no')
+        _email_address = dct.get('email_address')
         _address = dct.get('address')
 
         borrower = Borrower(

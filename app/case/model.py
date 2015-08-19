@@ -1,4 +1,4 @@
-from app.db import db, array_type
+from app.db import db
 from app.helper.serialize import serialize_datetime
 from app import json
 from dateutil.parser import parse

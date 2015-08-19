@@ -1,10 +1,8 @@
 from app.borrower.model import Borrower
 from tests.case.helpers import CaseHelper
-from random import randint
 
 
 class BorrowerHelper:
-    _id = randint(1, 999999)
     _first_name = "Frank"
     _middle_names = "The Undesputable"
     _last_name = "Tank"
@@ -24,14 +22,12 @@ class BorrowerHelper:
 
     @staticmethod
     def _create_borrower():
-
         borrower = Borrower(BorrowerHelper._first_name,
                             BorrowerHelper._middle_names,
                             BorrowerHelper._last_name,
                             BorrowerHelper._mobile_no,
                             BorrowerHelper._email_address,
                             BorrowerHelper._address)
-        borrower.id = BorrowerHelper._id
 
         return borrower
 
