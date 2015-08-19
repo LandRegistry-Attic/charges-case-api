@@ -21,5 +21,5 @@ Scenario: Retrieve case from case API
       "conveyancer_id": "1"
     }
     """
-    When I call the case API
+    When I retrieve the created case
     Then the correct case details are returned
