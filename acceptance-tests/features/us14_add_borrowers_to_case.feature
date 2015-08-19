@@ -15,10 +15,39 @@ Background:
 
 Scenario: Add Borrowers to Case
     When I add the following borrowers to a case:
-      | FIRST NAME  | MIDDLE NAME | LAST NAME | ADDRESS                           | MOBILE NUMBER | EMAIL ADDRESS       |
-      | Peter       |             | Smith     | 80 Mayorly Place, London, N12 5AZ | 07113889900   | psmith@yahoo.co.uk  |
-      | Sarah       | Jane        | Smith     | 83 Lordship Park, London, N16 5UP | 07970112233   | sjsmith@gmail.com   |
-    And I retrieve the created case
+    """
+    {
+      "borrowers": [
+       {
+         "first_name": "Paul",
+         "last_name": "Smith",
+         "email_address": "psmith@yahoo.co.uk",
+         "type": "Borrower",
+         "mobile_no": "07970112233",
+         "middle_names": "",
+         "address": [
+           "83 Lordship Park",
+           "London",
+           "N16 5UT"
+         ]
+       },
+       {
+         "first_name": "Sarah",
+         "last_name": "Smith",
+         "email_address": "sjsmith@gmail.com",
+         "type": "Borrower",
+         "mobile_no": "07970445566",
+         "middle_names": "Jane",
+         "address": [
+           "18 Mayorly Place",
+           "London",
+           "N12 5RS"
+         ]
+        }
+      ]
+    }
+    """
+    And I retrieve borrowers for the created case
     Then the correct borrowers details are returned
 
 Scenario: Add Borrower to Case with Missing Mandatory Information

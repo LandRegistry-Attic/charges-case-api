@@ -21,3 +21,7 @@ end
 Given(/^make the deed effective$/) do
   make_deed_effective(@created_deed['id'])
 end
+
+When(/^I add the following borrowers to a case:$/) do |borrower_json|
+  add_borrowers_to_case(@created_case['id'], borrower_json)
+end
