@@ -11,4 +11,8 @@ end
 
 ### Code that should be executed once all of the acceptance tests have run.
 After do
+  if @case_id
+    puts "Deleting test case #{@case_id}..."
+    delete_case_data(@case_id)
+  end
 end
