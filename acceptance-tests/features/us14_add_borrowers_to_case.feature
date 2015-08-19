@@ -6,7 +6,12 @@ Feature: Add Borrowers to Case
     So that I have them on my records
 
 Background:
-    Given I have created a case
+    Given I have created the following case:
+    """
+    {
+      "conveyancer_id": "1"
+    }
+    """
 
 Scenario: Add Borrowers to Case
     When I add the following borrowers to a case:
