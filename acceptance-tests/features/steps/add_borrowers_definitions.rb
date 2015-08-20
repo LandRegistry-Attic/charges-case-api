@@ -1,3 +1,11 @@
+When(/^I add the following borrowers to a case:$/) do |borrower_json|
+  add_borrowers_to_case(@created_case['id'], borrower_json)
+end
+
+When(/^I retrieve borrowers for the created case$/) do
+  @borrowers = get_borrowers_for_case(@created_case['id'])
+end
+
 When(/^I try to add a borrower with missing mandatory information$/) do
   borrower_json = {
     "borrowers"=>[
