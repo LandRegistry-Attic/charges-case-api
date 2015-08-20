@@ -7,5 +7,5 @@ When(/^I retrieve the created case$/) do
 end
 
 Then(/^a status code of "([^"]*)" is returned$/) do |status_code|
-  assert_equal(status_code, @response.code)
+  assert_equal(status_code, @response.code.to_s)
 end
