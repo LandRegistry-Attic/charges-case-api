@@ -30,6 +30,16 @@ def add_borrowers_to_case(case_id, borrower_json)
   end
 end
 
+def get_borrowers_for_case(case_id)
+  response = HTTP.get($CASE_API_URL + '/case/' + case_id.to_s + '/borrowers')
+  if response.code == 200
+    JSON.parse(response.body)
+  else
+    fail "Error: Couldn't retrieve borrowers for case #{case_id}, "\
+            "received response #{response.code}"
+  end
+end
+
 def delete_case_data(case_id)
   response = HTTP.delete(Env.domain + '/case/' + case_id.to_s)
   if response.code == 200
