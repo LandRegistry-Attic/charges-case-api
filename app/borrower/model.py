@@ -7,13 +7,14 @@ class Borrower(db.Model, json.Serialisable):
 
     id = db.Column(db.Integer, primary_key=True)
     case_id = db.Column(db.Integer,
-                        db.ForeignKey('case.id', ondelete="CASCADE"))
-    first_name = db.Column(db.String())
+                        db.ForeignKey('case.id', ondelete="CASCADE"),
+                        nullable=False)
+    first_name = db.Column(db.String(), nullable=False)
     middle_names = db.Column(db.String())
-    last_name = db.Column(db.String())
-    mobile_no = db.Column(db.String())
-    email_address = db.Column(db.String())
-    address = db.Column(array_type(db.String()))
+    last_name = db.Column(db.String(), nullable=False)
+    mobile_no = db.Column(db.String(), nullable=False)
+    email_address = db.Column(db.String(), nullable=False)
+    address = db.Column(array_type(db.String()), nullable=False)
 
     def __init__(self,
                  case_id,
@@ -51,6 +52,10 @@ class Borrower(db.Model, json.Serialisable):
     @staticmethod
     def get(id_):
         return Borrower.query.filter_by(id=id_).first()
+
+    @staticmethod
+    def get_by_case_id(case_id):
+        return Borrower.query.filter_by(case_id=case_id).all()
 
     @staticmethod
     def delete(id_):
