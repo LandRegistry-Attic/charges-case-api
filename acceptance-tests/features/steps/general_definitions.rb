@@ -25,3 +25,7 @@ end
 When(/^I add the following borrowers to a case:$/) do |borrower_json|
   add_borrowers_to_case(@created_case['id'], borrower_json)
 end
+
+Then(/^a status code of "([^"]*)" is returned$/) do |status_code|
+  assert_equal(status_code, @response.code)
+end
