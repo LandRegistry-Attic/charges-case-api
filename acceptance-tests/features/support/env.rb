@@ -4,4 +4,13 @@
 ### need to change every test when switching environments for example.       ###
 ################################################################################
 
-$CASE_API_URL = (ENV['CHARGES_API_URL'] || 'http://case-api.dev.service.gov.uk')
+# Environment variables for tests
+class Env
+  def self.deed_api
+    (ENV['DOMAIN'] || 'http://deedapi.dev.service.gov.uk')
+  end
+
+  def self.domain
+    (ENV['CASE_API_URL'] || 'http://case-api.dev.service.gov.uk')
+  end
+end

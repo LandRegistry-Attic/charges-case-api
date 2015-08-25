@@ -1,5 +1,5 @@
 Given(/^I access the helloworld API$/) do
-  response = Net::HTTP.get_response(URI($CASE_API_URL + '/helloworld'))
+  response = Net::HTTP.get_response(URI(Env.domain + '/helloworld'))
   $apiData = MultiJson.load(response.body)
 end
 
