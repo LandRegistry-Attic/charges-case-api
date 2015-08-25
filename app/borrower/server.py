@@ -33,7 +33,7 @@ def register_routes(blueprint):
             print(str(type(exc)) + ":" + str(exc))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return {'status_code': status.HTTP_200_OK}
+        return borrowers
 
     @blueprint.route('/case/<case_id>/borrowers', methods=['GET'])
     def get_borrowers(case_id):
