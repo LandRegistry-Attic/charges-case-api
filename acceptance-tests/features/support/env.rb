@@ -7,7 +7,7 @@
 # Environment variables for tests
 class Env
   def self.deed_api
-    (ENV['DOMAIN'] || 'http://deedapi.dev.service.gov.uk')
+    (ENV['DEED_API_URL'] || 'http://deedapi.dev.service.gov.uk')
   end
 
   def self.domain
