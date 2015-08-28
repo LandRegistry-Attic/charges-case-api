@@ -21,3 +21,7 @@ end
 Given(/^make the deed effective$/) do
   make_deed_effective(@created_deed['id'])
 end
+
+Then(/^a status code of "([^"]*)" is returned$/) do |status_code|
+  assert_equal(status_code, @response.code.to_s)
+end
