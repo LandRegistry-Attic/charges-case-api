@@ -61,4 +61,4 @@ Scenario: Attempt to submit a case with a status of submitted
     And make the deed effective
     When I send a submit request via the API
     And submit again
-    Then an error message of 403 is returned
+    Then a status code of "403" is returned
