@@ -25,7 +25,7 @@ When(/^I try to add a borrower with missing mandatory information$/) do
       }
     ]
   }
-  @response = HTTP.post($CASE_API_URL + '/case/' + @created_case['id'].to_s + '/borrowers', json: borrower_json)
+  @response = HTTP.post(Env.domain + '/case/' + @created_case['id'].to_s + '/borrowers', json: borrower_json)
 end
 
 Then(/^the correct borrowers details are returned$/) do

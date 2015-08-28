@@ -20,7 +20,7 @@ def get_case_data(case_id)
 end
 
 def add_borrowers_to_case(case_id, borrower_json)
-  response = HTTP.post($CASE_API_URL + '/case/' + case_id.to_s + '/borrowers', json: borrower_json)
+  response = HTTP.post(Env.domain + '/case/' + case_id.to_s + '/borrowers', json: borrower_json)
   if response.code == 200
     JSON.parse(response.body)
   else
@@ -30,7 +30,7 @@ def add_borrowers_to_case(case_id, borrower_json)
 end
 
 def get_borrowers_for_case(case_id)
-  response = HTTP.get($CASE_API_URL + '/case/' + case_id.to_s + '/borrowers')
+  response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/borrowers')
   if response.code == 200
     JSON.parse(response.body)
   else
