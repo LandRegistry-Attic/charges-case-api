@@ -15,10 +15,15 @@ Background:
     And I add the following property to the case:
     """
     {
-      "street_address": "83 Lordship Park",
-      "extended_address": "",
-      "locality": "London",
-      "postcode": "N16 5UP"
+       "property": {
+         "locality": "Plymouth",
+         "tenure": "freehold",
+         "postcode": "PL6 5DP",
+         "title_number": "DN513498",
+         "street": "18 Janner Lane",
+         "type": "Property",
+         "extended": "St. Budeaux"
+       }
     }
     """
 
