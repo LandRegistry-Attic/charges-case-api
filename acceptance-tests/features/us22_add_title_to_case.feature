@@ -33,4 +33,4 @@ Scenario: Add Title to Case
 
 Scenario: Try to Add Two Titles to a Case
     When I try to add another property to the case
-    Then a status code of "403" is returned
+    Then a status code of "500" is returned

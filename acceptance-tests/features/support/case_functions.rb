@@ -20,7 +20,8 @@ def get_case_data(case_id)
 end
 
 def add_borrowers_to_case(case_id, borrower_json)
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s + '/borrowers', json: borrower_json)
+  response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
+                      '/borrowers', json: borrower_json)
   if response.code == 200
     JSON.parse(response.body)
   else
@@ -40,11 +41,22 @@ def get_borrowers_for_case(case_id)
 end
 
 def add_property_to_case(case_id, property_json)
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s + '/property', json: property_json)
+  response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
+                      '/property', json: property_json)
   if response.code == 200
     JSON.parse(response.body)
   else
     fail "Error: Couldn't add property to case #{property_json}, "\
+            "received response #{response.code}"
+  end
+end
+
+def get_property_for_case(case_id)
+  response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/property')
+  if response.code == 200
+    JSON.parse(response.body)
+  else
+    fail "Error: Couldn't retrieve property for case #{case_id}, "\
             "received response #{response.code}"
   end
 end
