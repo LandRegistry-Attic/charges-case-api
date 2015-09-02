@@ -12,7 +12,7 @@ Background:
       "conveyancer_id": "1"
     }
     """
-    And I add the following address to the case:
+    And I add the following property to the case:
     """
     {
       "street_address": "83 Lordship Park",
@@ -27,5 +27,5 @@ Scenario: Add Title to Case
     Then the correct property details are returned
 
 Scenario: Try to Add Two Titles to a Case
-    When I try to add another address to the case
+    When I try to add another property to the case
     Then a status code of "403" is returned
