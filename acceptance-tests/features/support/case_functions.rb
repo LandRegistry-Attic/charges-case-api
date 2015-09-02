@@ -41,6 +41,7 @@ def get_borrowers_for_case(case_id)
 end
 
 def add_property_to_case(case_id, property_json)
+  property_json = JSON.parse(property_json)
   response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
                       '/property', json: property_json)
   if response.code == 200
