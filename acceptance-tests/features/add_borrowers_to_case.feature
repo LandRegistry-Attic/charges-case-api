@@ -12,7 +12,7 @@ Background:
       "conveyancer_id": "1"
     }
     """
-
+@delete_test_data
 Scenario: Add Borrowers to Case
     When I add the following borrowers to a case:
     """
@@ -50,6 +50,7 @@ Scenario: Add Borrowers to Case
     And I retrieve borrowers for the created case
     Then the correct borrowers details are returned
 
+@delete_test_data
 Scenario: Add Borrower to Case with Missing Mandatory Information
     When I try to add a borrower with missing mandatory information
     Then a status code of "400" is returned

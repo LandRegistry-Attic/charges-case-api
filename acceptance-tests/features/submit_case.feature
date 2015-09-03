@@ -9,6 +9,7 @@ Acceptance Criteria:
     - A request to the API brings back a json array with following data:
       - an error message of 403
 
+@delete_test_data
 Scenario: Attempt to submit a case with a status of submitted
     Given I have created the following case:
     """
