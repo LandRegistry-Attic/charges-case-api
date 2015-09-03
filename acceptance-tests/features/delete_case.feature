@@ -42,7 +42,7 @@ Scenario: Delete a Case with a Borrower and Property
          "street": "18 Janner Lane",
          "type": "Property",
          "extended": "St. Budeaux"
-       }
+      }
     }
     """
     And I delete the created case
