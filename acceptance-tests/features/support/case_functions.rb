@@ -55,7 +55,7 @@ end
 def get_property_for_case(case_id)
   response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/property')
   if response.code == 200
-    puts "Case #{case_id} has been deleted."
+    JSON.parse(response.body)
   else
     fail "Error: Couldn't retrieve property for case #{case_id}, "\
             "received response #{response.code}"
