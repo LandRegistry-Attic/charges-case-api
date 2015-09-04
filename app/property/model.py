@@ -18,12 +18,14 @@ class Property(db.Model, json.Serialisable):
     tenure = db.Column(db.String(), nullable=False)
 
     def __init__(self,
+                 case_id,
                  title_number,
                  street,
                  tenure,
                  locality,
                  postcode,
                  extended=None):
+        self.case_id = case_id
         self.title_number = title_number
         self.street = street
         self.extended = extended
@@ -39,10 +41,6 @@ class Property(db.Model, json.Serialisable):
     def get(id_):
         return Property.query.filter_by(id=id_).first()
 
-    @staticmethod
-    def get_by_case_id(case_id):
-        return Property.query.filter_by(case_id=case_id).first()
-
     def json_format(self):
         jsondata = {}
 
@@ -51,6 +49,8 @@ class Property(db.Model, json.Serialisable):
             if value is not None:
                 jsondata[name] = value
 
+        append('id', lambda obj: obj.id)
+        append('case_id', lambda obj: obj.case_id)
         append('title_number', lambda obj: obj.title_number)
         append('street', lambda obj: obj.street)
         append('extended', lambda obj: obj.extended)
@@ -61,6 +61,8 @@ class Property(db.Model, json.Serialisable):
         return jsondata
 
     def object_hook(dct):
+        _id = dct.get('id')
+        _case_id = dct.get('case_id')
         _title_number = dct.get('title_number')
         _street = dct.get('street')
         _extended = dct.get('extended', None)
@@ -69,6 +71,7 @@ class Property(db.Model, json.Serialisable):
         _tenure = dct.get('tenure')
 
         property_ = Property(
+            _case_id,
             _title_number,
             _street,
             _tenure,
@@ -76,5 +79,7 @@ class Property(db.Model, json.Serialisable):
             _postcode,
             _extended
         )
+
+        property_.id = _id
 
         return property_

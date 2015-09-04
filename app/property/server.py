@@ -1,6 +1,7 @@
 from flask import request, abort
 from flask.ext.api import status
 from app.property.model import Property
+from app.property import service
 
 
 def register_routes(blueprint):
@@ -20,7 +21,7 @@ def register_routes(blueprint):
 
     @blueprint.route('/case/<case_id>/property', methods=['GET'])
     def get_property(case_id):
-        property_ = Property.get_by_case_id(case_id)
+        property_ = service.get_property_by_case_id(case_id)
 
         if property_ is None:
             abort(status.HTTP_404_NOT_FOUND)
