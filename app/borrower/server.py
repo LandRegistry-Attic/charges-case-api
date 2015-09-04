@@ -39,7 +39,7 @@ def register_routes(blueprint):
     def get_borrowers(case_id):
         borrowers = Borrower.get_by_case_id(case_id)
 
-        if borrowers is None:
+        if borrowers is None or borrowers == []:
             abort(status.HTTP_404_NOT_FOUND)
 
         return [borrower.to_json() for borrower in borrowers]
