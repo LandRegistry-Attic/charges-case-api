@@ -81,4 +81,3 @@ class Case(db.Model, json.Serialisable):
         case.case_ref = str(_case_ref)
 
         return case
-
