@@ -41,11 +41,7 @@ def register_routes(blueprint):
             case_ref=request.data.get('case_ref')
         )
 
-        try:
-            CaseService.save(case)
-        except Exception as inst:
-            print(str(type(inst)) + ":" + str(inst))
-            raise exceptions.NotAcceptable()
+        CaseService.save(case)
 
         return case.to_json(), status.HTTP_201_CREATED
 

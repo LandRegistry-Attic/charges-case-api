@@ -1,3 +1,4 @@
+from flask_api import exceptions
 from app.borrower.model import Borrower
 from app.case.model import Case
 from app.db import db
@@ -7,8 +8,12 @@ class Service:
 
     @staticmethod
     def save(case):
-        db.session.add(case)
-        db.session.commit()
+        try:
+            db.session.add(case)
+            db.session.commit()
+        except Exception as inst:
+            print(str(type(inst)) + ":" + str(inst))
+            raise exceptions.NotAcceptable()
 
     @staticmethod
     def all():
