@@ -2,7 +2,7 @@ from random import randint
 import json
 import unittest
 
-from app.case.service import Service as CaseService
+from app.case import service as CaseService
 from tests.helpers import with_client, setUpApp, \
     with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper

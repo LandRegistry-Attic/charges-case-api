@@ -1,5 +1,5 @@
 from app.case.model import Case
-from app.case.service import Service as CaseService
+from app.case import service as CaseService
 from random import randint
 from datetime import datetime
 

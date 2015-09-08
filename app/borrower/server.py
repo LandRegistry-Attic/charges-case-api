@@ -1,7 +1,7 @@
 from flask import request, abort
 
 from flask.ext.api import status
-from app.borrower.service import Service as BorrowerService
+from app.borrower import service as BorrowerService
 
 
 def register_routes(blueprint):

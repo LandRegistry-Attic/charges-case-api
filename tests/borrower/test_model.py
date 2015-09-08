@@ -2,7 +2,7 @@ import unittest
 
 from tests.borrower.helpers import BorrowerHelper
 from tests.case.helpers import CaseHelper
-from app.borrower.service import Service as BorrowerService
+from app.borrower import service as BorrowerService
 from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
 
 

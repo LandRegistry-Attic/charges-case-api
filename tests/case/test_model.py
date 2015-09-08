@@ -1,6 +1,6 @@
 import unittest
 
-from app.case.service import Service as CaseService
+from app.case import service as CaseService
 from app.helper.serialize import serialize_datetime
 from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper

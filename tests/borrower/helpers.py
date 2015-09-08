@@ -1,6 +1,6 @@
 from random import randint
 from app.borrower.model import Borrower
-from app.borrower.service import Service as BorrowerService
+from app.borrower import service as BorrowerService
 from tests.case.helpers import CaseHelper
 
 
