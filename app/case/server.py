@@ -1,8 +1,8 @@
+from datetime import datetime
+from flask import request, abort
 from app.case.model import Case
 from app.case.service import Service as CaseService
 from flask.ext.api import exceptions, status
-from flask import request, abort
-from datetime import datetime
 
 
 def register_routes(blueprint):

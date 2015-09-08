@@ -1,12 +1,12 @@
-from app.case.model import Case
+from random import randint
+import json
+import unittest
+
 from app.case.service import Service as CaseService
 from tests.helpers import with_client, setUpApp, \
     with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper
-from random import randint
 from flask.ext.api import status
-import json
-import unittest
 
 
 class TestCaseRoutes(unittest.TestCase):

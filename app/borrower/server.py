@@ -1,6 +1,6 @@
 from flask import request, abort
+
 from flask.ext.api import status
-from app.borrower.model import Borrower
 from app.borrower.service import Service as BorrowerService
 
 
