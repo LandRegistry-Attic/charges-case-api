@@ -1,4 +1,5 @@
 from app.case.model import Case
+from app.case.service import Service as CaseService
 from tests.helpers import with_client, setUpApp, \
     with_context, setUpDB, tearDownDB
 from tests.case.helpers import CaseHelper
@@ -38,7 +39,7 @@ class TestCaseRoutes(unittest.TestCase):
     @with_client
     def test_get_route(self, client):
         case = CaseHelper._create_case_and_save()
-        case = Case.get(case.id)
+        case = CaseService.get(case.id)
 
         response = client.get('/case/{}'.format(case.id))
 
@@ -64,7 +65,7 @@ class TestCaseRoutes(unittest.TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        Case.delete(case.id)
+        CaseService.delete(case.id)
 
         response = client.get('/case/{}'.format(case.id))
 
@@ -215,7 +216,7 @@ class TestCaseRoutes(unittest.TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        updated_case = Case.get(case.id)
+        updated_case = CaseService.get(case.id)
         self.assertEqual(updated_case.status, 'Submitted')
 
         CaseHelper._delete_case(case.id)

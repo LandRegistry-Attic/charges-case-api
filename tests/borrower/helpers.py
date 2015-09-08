@@ -1,5 +1,6 @@
 from random import randint
 from app.borrower.model import Borrower
+from app.borrower.service import Service as BorrowerService
 from tests.case.helpers import CaseHelper
 
 
@@ -19,7 +20,7 @@ class BorrowerHelper:
 
         borrower = BorrowerHelper._create_borrower()
         borrower.case_id = case.id
-        borrower.save()
+        BorrowerService.save(borrower)
 
         return borrower
 
@@ -39,4 +40,4 @@ class BorrowerHelper:
 
     @staticmethod
     def _delete_borrower(_id):
-        Borrower.delete(_id)
+        BorrowerService.delete(_id)

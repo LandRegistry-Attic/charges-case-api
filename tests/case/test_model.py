@@ -1,4 +1,5 @@
 from app.case.model import Case
+from app.case.service import Service as CaseService
 import unittest
 from app.helper.serialize import serialize_datetime
 from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
@@ -17,18 +18,18 @@ class TestCaseModel (unittest.TestCase):
     @with_context
     def test_get_all(self):
         case = CaseHelper._create_case_and_save()
-        case = Case.get(case.id)
+        case = CaseService.get(case.id)
 
-        self.assertIn(case, Case.all())
+        self.assertIn(case, CaseService.all())
 
         CaseHelper._delete_case(case.id)
 
-        self.assertNotIn(case, Case.all())
+        self.assertNotIn(case, CaseService.all())
 
     @with_context
     def test_get(self):
         case = CaseHelper._create_case_and_save()
-        case = Case.get(case.id)
+        case = CaseService.get(case.id)
 
         self.assertEqual(case.id, case.id)
 
@@ -37,12 +38,12 @@ class TestCaseModel (unittest.TestCase):
     @with_context
     def test_delete(self):
         case = CaseHelper._create_case_and_save()
-        case = Case.get(case.id)
+        case = CaseService.get(case.id)
 
         self.assertEqual(case.id, CaseHelper._id)
 
-        Case.delete(case.id)
-        case = Case.get(case.id)
+        CaseService.delete(case.id)
+        case = CaseService.get(case.id)
 
         self.assertIs(case, None)
 
@@ -73,8 +74,8 @@ class TestCaseModel (unittest.TestCase):
 
     @with_context
     def test_is_case_status_valid_positive(self):
-        self.assertTrue(Case.is_case_status_valid("Deed signed"))
+        self.assertTrue(CaseService.is_case_status_valid("Deed signed"))
 
     @with_context
     def test_is_case_status_valid_negative(self):
-        self.assertFalse(Case.is_case_status_valid("Invalid status"))
+        self.assertFalse(CaseService.is_case_status_valid("Invalid status"))

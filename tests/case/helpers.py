@@ -1,4 +1,5 @@
 from app.case.model import Case
+from app.case.service import Service as CaseService
 from random import randint
 from datetime import datetime
 
@@ -13,15 +14,15 @@ class CaseHelper:
     @staticmethod
     def _create_case_and_save():
         case = CaseHelper._create_case()
-        case.save()
+        CaseService.save(case)
 
         return case
 
     @staticmethod
     def _update_case_deed_id(case_id, deed_id):
-        case = Case.get(case_id)
+        case = CaseService.get(case_id)
         case.deed_id = deed_id
-        case.save()
+        CaseService.save(case)
 
     @staticmethod
     def _create_case():
@@ -40,10 +41,10 @@ class CaseHelper:
 
     @staticmethod
     def _delete_case(_id):
-        Case.delete(_id)
+        CaseService.delete(_id)
 
     @staticmethod
     def _update_status(case_id, status):
-        case = Case.get(case_id)
+        case = CaseService.get(case_id)
         case.status = status
-        case.save()
+        CaseService.save(case)
