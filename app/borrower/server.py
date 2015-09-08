@@ -1,6 +1,7 @@
 from flask import request, abort
 from flask.ext.api import status
 from app.borrower.model import Borrower
+from app.borrower.service import Service as BorrowerService
 
 
 def register_routes(blueprint):
@@ -28,7 +29,7 @@ def register_routes(blueprint):
         borrowers = [add_case_id(item) for item in request_data]
 
         try:
-            Borrower.add(borrowers)
+            BorrowerService.bulk_add(borrowers)
         except Exception as exc:
             print(str(type(exc)) + ":" + str(exc))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -37,7 +38,7 @@ def register_routes(blueprint):
 
     @blueprint.route('/case/<case_id>/borrowers', methods=['GET'])
     def get_borrowers(case_id):
-        borrowers = Borrower.get_by_case_id(case_id)
+        borrowers = BorrowerService.get_by_case_id(case_id)
 
         if borrowers is None or borrowers == []:
             abort(status.HTTP_404_NOT_FOUND)
