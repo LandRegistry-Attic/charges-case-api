@@ -3,7 +3,6 @@ from app.helper.serialize import serialize_datetime
 from app import json
 from dateutil.parser import parse
 from datetime import datetime
-from app.borrower.model import Borrower
 
 
 class Case(db.Model, json.Serialisable):
@@ -41,38 +40,6 @@ class Case(db.Model, json.Serialisable):
             self.created_on = created_on
         else:
             self.created_on = datetime.now()
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @staticmethod
-    def all():
-        return Case.query.all()
-
-    @staticmethod
-    def all_with_borrowers():
-        return db.session.query(Case, Borrower).outerjoin(Borrower).all()
-
-    @staticmethod
-    def get(id_):
-        return Case.query.filter_by(id=id_).first()
-
-    @staticmethod
-    def get_by_deed_id(deed_id):
-        return Case.query.filter_by(deed_id=deed_id).first()
-
-    @staticmethod
-    def delete(id_):
-        case = Case.query.filter_by(id=id_).first()
-
-        if case is None:
-            return case
-
-        db.session.delete(case)
-        db.session.commit()
-
-        return case
 
     def json_format(self):
         jsondata = {}
@@ -115,8 +82,3 @@ class Case(db.Model, json.Serialisable):
 
         return case
 
-    @staticmethod
-    def is_case_status_valid(case_status):
-        valid_statuses = ['Case created', 'Deed created', 'Deed signed',
-                          'Completion confirmed', 'Submitted']
-        return case_status in valid_statuses

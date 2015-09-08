@@ -1,4 +1,5 @@
 from app.case.model import Case
+from app.case.service import Service as CaseService
 from flask.ext.api import exceptions, status
 from flask import request, abort
 from datetime import datetime
@@ -8,7 +9,7 @@ def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
         result = {}
-        for case, borrower in Case.all_with_borrowers():
+        for case, borrower in CaseService.all_with_borrowers():
             case_json = case.to_json()
 
             case_id = case_json['id']
@@ -25,7 +26,7 @@ def register_routes(blueprint):
 
     @blueprint.route('/case/<id_>', methods=['GET'])
     def get_case(id_):
-        case = Case.get(id_)
+        case = CaseService.get(id_)
 
         if case is None:
             raise exceptions.NotFound()
@@ -41,7 +42,7 @@ def register_routes(blueprint):
         )
 
         try:
-            case.save()
+            CaseService.save(case)
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
             raise exceptions.NotAcceptable()
