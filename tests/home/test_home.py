@@ -12,4 +12,5 @@ class TestHome (unittest.TestCase):
     def test_get_api(self, client):
         response = client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('"Hello": "World"', response.data.decode())
+        self.assertIn('"Case"', response.data.decode())
+        self.assertIn('"Borrowers"', response.data.decode())
