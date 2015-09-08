@@ -33,14 +33,6 @@ class Property(db.Model, json.Serialisable):
         self.postcode = postcode
         self.tenure = tenure
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @staticmethod
-    def get(id_):
-        return Property.query.filter_by(id=id_).first()
-
     def json_format(self):
         jsondata = {}
 

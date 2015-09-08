@@ -1,6 +1,7 @@
 from random import randint
 from app.property.model import Property
 from tests.case.helpers import CaseHelper
+from app.property import service
 
 
 class PropertyHelper:
@@ -19,7 +20,7 @@ class PropertyHelper:
 
         property_ = PropertyHelper._create_property()
         property_.case_id = case.id
-        property_.save()
+        service.save(property_)
 
         return property_
 
@@ -36,7 +37,3 @@ class PropertyHelper:
         property_.id = PropertyHelper._id
 
         return property_
-
-    @staticmethod
-    def _delete_property(_id):
-        Property.delete(_id)

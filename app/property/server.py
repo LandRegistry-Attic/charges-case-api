@@ -12,7 +12,7 @@ def register_routes(blueprint):
         property_.case_id = case_id
 
         try:
-            property_.save()
+            service.save(property_)
         except Exception as exc:
             print(str(type(exc)) + ":" + str(exc))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
