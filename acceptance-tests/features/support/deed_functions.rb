@@ -15,7 +15,6 @@ def sign_the_deed(deed_id, signature, borrower_id)
   }
   response = HTTP.post(Env.deed_api + '/deed/' + deed_id.to_s +
                        '/' + borrower_id + '/signature/', json: signature_json)
-end
 
   if response.code == 200
     puts "Deed #{deed_id} has been signed."
