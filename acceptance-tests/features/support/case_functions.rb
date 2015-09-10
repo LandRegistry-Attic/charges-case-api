@@ -62,6 +62,16 @@ def get_property_for_case(case_id)
   end
 end
 
+def delete_case_data(case_id)
+  response = HTTP.delete(Env.domain + '/case/' + case_id.to_s)
+  if response.code == 200
+    puts "Case #{case_id} has been deleted."
+  else
+    fail "Error: Couldn't delete case #{case_id}, "\
+            "received response #{response.code}."
+  end
+end
+
 def get_property_for_case(case_id)
   response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/property')
   if response.code == 200
