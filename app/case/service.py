@@ -1,5 +1,5 @@
 from flask_api import exceptions
-from app.borrower.model import Borrower
+
 from app.case.model import Case
 from app.db import db
 

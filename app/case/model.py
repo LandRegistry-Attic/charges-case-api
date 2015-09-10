@@ -62,7 +62,8 @@ class Case(db.Model, json.Serialisable):
         append('created_on',
                lambda obj: serialize_datetime(obj.created_on))
         append('case_ref', lambda obj: obj.case_ref)
-        append('borrowers', lambda obj: [borrowers.to_json() for borrowers in obj.borrowers])
+        append('borrowers', lambda obj: [borrowers.to_json()
+                                         for borrowers in obj.borrowers])
 
         return jsondata
 
