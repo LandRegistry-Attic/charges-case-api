@@ -8,7 +8,7 @@ class Borrower(db.Model, json.Serialisable):
     id = db.Column(db.Integer, primary_key=True)
     case_id = db.Column(db.Integer,
                         db.ForeignKey('case.id', ondelete="CASCADE"),
-                        nullable=False)
+                        nullable=True)
     first_name = db.Column(db.String(), nullable=False)
     middle_names = db.Column(db.String())
     last_name = db.Column(db.String(), nullable=False)

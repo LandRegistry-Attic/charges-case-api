@@ -6,6 +6,7 @@ from tests.helpers import with_client, setUpApp, \
 from tests.case.helpers import CaseHelper
 from tests.borrower.helpers import BorrowerHelper
 from flask.ext.api import status
+from app.case.model import Case
 
 
 class TestBorrowerRoutes(TestCase):
@@ -36,10 +37,10 @@ class TestBorrowerRoutes(TestCase):
         get_cases_response = client.get('/case')
 
         cases = json.loads(get_cases_response.data.decode())
-        case_returned = cases[str(case.id)]
-        self.assertIn('borrowers', case_returned)
+        case_returned = list(filter(lambda case_json: case_json['id'] == case.id, cases))
+        self.assertIn('borrowers', case_returned[0])
 
-        borrowers_returned = case_returned['borrowers']
+        borrowers_returned = case_returned[0]['borrowers']
         self.assertEqual(len(borrowers_returned), 2)
         self.assertEqual(borrowers_returned[0]['case_id'], case.id)
 

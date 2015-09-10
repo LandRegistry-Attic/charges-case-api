@@ -15,6 +15,10 @@ class Case(db.Model, json.Serialisable):
     last_updated = db.Column(db.DateTime())
     created_on = db.Column(db.DateTime())
     case_ref = db.Column(db.String())
+    borrowers = db.relationship(
+        'Borrower',
+        order_by='Borrower.last_name',
+        backref='case_borrower')
 
     def __init__(self,
                  conveyancer_id,
@@ -58,6 +62,7 @@ class Case(db.Model, json.Serialisable):
         append('created_on',
                lambda obj: serialize_datetime(obj.created_on))
         append('case_ref', lambda obj: obj.case_ref)
+        append('borrowers', lambda obj: [borrowers.to_json() for borrowers in obj.borrowers])
 
         return jsondata
 

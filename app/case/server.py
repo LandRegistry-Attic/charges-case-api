@@ -8,21 +8,7 @@ from flask.ext.api import exceptions, status
 def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
-        result = {}
-        for case, borrower in CaseService.all_with_borrowers():
-            case_json = case.to_json()
-
-            case_id = case_json['id']
-            if case_id not in result:
-                result[case_id] = case_json
-
-            if 'borrowers' not in result[case_id]:
-                result[case_id]['borrowers'] = []
-
-            if borrower is not None:
-                result[case_id]['borrowers'].append(borrower.to_json())
-
-        return result
+        return [case.to_json() for case in CaseService.all()]
 
     @blueprint.route('/case/<id_>', methods=['GET'])
     def get_case(id_):

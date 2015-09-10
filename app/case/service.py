@@ -33,10 +33,6 @@ def delete(id_):
     return case
 
 
-def all_with_borrowers():
-    return db.session.query(Case, Borrower).outerjoin(Borrower).all()
-
-
 def get_by_deed_id(deed_id):
     return Case.query.filter_by(deed_id=deed_id).first()
 
