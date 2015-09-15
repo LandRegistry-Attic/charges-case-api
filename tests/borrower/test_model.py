@@ -1,7 +1,6 @@
-from tests.borrower.helpers import BorrowerHelper
-from tests.case.helpers import CaseHelper
-from app.borrower.model import Borrower
 import unittest
+
+from tests.borrower.helpers import BorrowerHelper
 from tests.helpers import setUpApp, with_context, setUpDB, tearDownDB
 
 
@@ -12,17 +11,6 @@ class TestBorrowerModel(unittest.TestCase):
 
     def tearDown(self):
         tearDownDB(self)
-
-    @with_context
-    def test_get_all(self):
-        borrower = BorrowerHelper._create_borrower_and_save()
-        borrower = Borrower.get(borrower.id)
-
-        self.assertIn(borrower, Borrower.all())
-
-        BorrowerHelper._delete_borrower(borrower.id)
-
-        self.assertNotIn(borrower, Borrower.all())
 
     @with_context
     def test_to_json(self):
@@ -43,13 +31,3 @@ class TestBorrowerModel(unittest.TestCase):
                          BorrowerHelper._email_address)
         self.assertEqual(borrower_as_json["address"],
                          BorrowerHelper._address)
-
-    @with_context
-    def test_get_by_case_id(self):
-        borrower = BorrowerHelper._create_borrower_and_save()
-
-        borrowers = Borrower.get_by_case_id(borrower.case_id)
-
-        self.assertEqual(borrower.id, borrowers[0].id)
-
-        CaseHelper._delete_case(borrower.case_id)

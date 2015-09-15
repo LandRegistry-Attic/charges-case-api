@@ -8,7 +8,7 @@ class Borrower(db.Model, json.Serialisable):
     id = db.Column(db.Integer, primary_key=True)
     case_id = db.Column(db.Integer,
                         db.ForeignKey('case.id', ondelete="CASCADE"),
-                        nullable=False)
+                        nullable=True)
     first_name = db.Column(db.String(), nullable=False)
     middle_names = db.Column(db.String())
     last_name = db.Column(db.String(), nullable=False)
@@ -34,40 +34,6 @@ class Borrower(db.Model, json.Serialisable):
         self.mobile_no = mobile_no
         self.email_address = email_address
         self.address = address
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @staticmethod
-    def add(borrowers):
-        conn = db.session.connection()
-        conn.execute(Borrower.__table__.insert(), borrowers)
-        db.session.commit()
-
-    @staticmethod
-    def all():
-        return Borrower.query.all()
-
-    @staticmethod
-    def get(id_):
-        return Borrower.query.filter_by(id=id_).first()
-
-    @staticmethod
-    def get_by_case_id(case_id):
-        return Borrower.query.filter_by(case_id=case_id).all()
-
-    @staticmethod
-    def delete(id_):
-        borrower = Borrower.query.filter_by(id=id_).first()
-
-        if borrower is None:
-            return borrower
-
-        db.session.delete(borrower)
-        db.session.commit()
-
-        return borrower
 
     def json_format(self):
         jsondata = {}
