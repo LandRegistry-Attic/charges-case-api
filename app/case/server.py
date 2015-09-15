@@ -35,9 +35,9 @@ def register_routes(blueprint):
     def delete_case(id_):
 
         try:
-            case = Case.delete(id_)
+            case = CaseService.delete(id_)
         except Exception as inst:
-            print(type(inst) + ":" + inst)
+            print(str(type(inst)) + ":" + str(inst))
 
         if case is None:
             raise exceptions.NotFound
