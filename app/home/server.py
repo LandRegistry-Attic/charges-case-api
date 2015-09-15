@@ -2,25 +2,25 @@ from flask import current_app
 
 
 def register_routes(blueprint):
-
     @blueprint.route('/', methods=['GET'])
     def api_map():
         links = {}
         for rule in current_app.url_map._rules:
-            links[rule.rule] = (strip_irrelevant_methods(rule))
+            if rule.rule not in links:
+                links[rule.rule] = []
+            links[rule.rule].append(strip_irrelevant_methods(rule))
 
         return links
 
 
 def strip_irrelevant_methods(rule):
-
-    return str(list(
+    return list(
         filter(
             lambda method:
-            method != "OPTIONS" and method != "HEAD",
+            method in ["POST", "GET", "DELETE", "PUT"],
             list(rule.methods)
         )
-    )[0])
+    )[0]
 
 
 def has_no_empty_params(rule):
