@@ -14,6 +14,7 @@ Acceptance Criteria:
       - created at(datetime)
       - conveyancer id(int)
 
+@delete_test_data
 Scenario: Retrieve case from case API
     Given I have created the following case:
     """
