@@ -18,11 +18,16 @@ get     /                           # automatically redirects to helloworld for 
 get     /helloworld                 # test endpoint for the application
 get     /case                       # get all cases
 get     /case/<id_>                 # get a cases with an id in the URL
+get     /case/<case_id>/property    # Get property for case id
+get     /case/<case_id>/borrowers   # Get borrowers for case id
 delete  /case/<id_>                 # delete a case with an id in the URL
 post    /case                       # Create a case by posting a json object reflecting the model
 post    /case/<deed_id>/status      # Updates the status of the case
 post    /case/<case_id>/application # Submits deed for registration
 post    /case/<case_id>/deed        # Adds deed id to case
+post    /case/<case_id>/borrowers   # Add borrowers to borrower table
+post    /case/<case_id>/property    # Add property to case
+
 ```
 > [model](#current-model) for post
 
@@ -64,11 +69,11 @@ python run.py db revision --autogenerate
 ```
 {
   "id": Integer(Primary Key),
-  "status": String
+  "status": String,
   "created_on": ISO Format DateTime,
   "last_updated": ISO Format DateTime,
   "deed_id": Integer,
-  "conveyancer_id": Integer,
+  "conveyancer_id": Integer
 }
 ```
 
@@ -122,5 +127,28 @@ e.g.
   ]
 }
 ```
-
 > Note: Because of the foreign key relationship, it will fail if the id of the case does not exist in the table
+
+### Property Model
+```
+{
+  "case_id": Integer(Primary Key)
+  "title_number": String,
+  "street": String,
+  "tenure": String,
+  "locality": String,
+  "postcode": String,
+}
+```
+
+e.g.
+```
+{
+  "case_id": 123456
+  "title_number": "DN100",
+  "street": "a Street",
+  "tenure": "Freehold",
+  "locality": "A Locality",
+  "postcode": "PL6 WDS",
+}
+```
