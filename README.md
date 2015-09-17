@@ -14,12 +14,15 @@ from the database, converting to JSON and returns as an endpoint.
 
 ## Usage
 ```
-get     /                 # automatically redirects to helloworld for app test
-get     /helloworld       # test endpoint for the application
-get     /case             # get all cases
-get     /case/<id_>       # get a cases with an id in the URL
-delete  /case/<id_>       # delete a case with an id in the URL
-post    /case             # Create a case by posting a json object reflecting the model
+get     /                           # automatically redirects to helloworld for app test
+get     /helloworld                 # test endpoint for the application
+get     /case                       # get all cases
+get     /case/<id_>                 # get a cases with an id in the URL
+delete  /case/<id_>                 # delete a case with an id in the URL
+post    /case                       # Create a case by posting a json object reflecting the model
+post    /case/<deed_id>/status      # Updates the status of the case
+post    /case/<case_id>/application # Submits deed for registration
+post    /case/<case_id>/deed        # Adds deed id to case
 ```
 > [model](#current-model) for post
 
