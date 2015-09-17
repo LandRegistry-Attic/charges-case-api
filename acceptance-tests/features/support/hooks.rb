@@ -10,7 +10,7 @@ Before do
 end
 
 ### Code that should be executed once all of the acceptance tests have run.
-After do
+After ('@delete_test_data') do
   if @created_case
     puts "Deleting test case #{@created_case['id']}..."
     delete_case_data(@created_case['id'])

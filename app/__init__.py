@@ -1,5 +1,5 @@
 from flask.ext.script import Manager
-from app import helloworld, case, db, borrower, property
+from app import helloworld, case, db, borrower, property, home
 from flask.ext.api import FlaskAPI
 
 
@@ -9,6 +9,7 @@ def create_manager():
     app.config.from_pyfile('config.py')
 
     app.register_blueprint(helloworld.blueprint)
+    app.register_blueprint(home.blueprint)
     app.register_blueprint(case.blueprint)
     app.register_blueprint(borrower.blueprint)
     app.register_blueprint(property.blueprint)

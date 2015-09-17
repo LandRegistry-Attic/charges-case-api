@@ -59,6 +59,8 @@ python run.py db revision --autogenerate
 
 ## Current Model
 
+### Case Model
+
 ```
 {
   "id": Integer(Primary Key),
@@ -81,3 +83,44 @@ e.g.
   "created_on": "2015-06-23T23:37:08.156356"
 }
 ```
+
+### Borrower model
+
+Borrowers are slightly different as you add an array of borrowers
+
+```
+{
+  "borrowers": [
+    {
+        "first_name": String,
+        "middle_names": String,
+        "last_name": String,
+        "case_id": Integer(foreign key),
+        "mobile_no": String,
+        "email_address": String,
+        "address": Array(String)
+    }
+  ]
+}
+```
+
+e.g.
+```
+{
+  "borrowers": [
+    {
+      "first_name": "John",
+      "middle_names": "Oliver",
+      "last_name": "Smith",
+      "case_id": 1,
+      "mobile_no": "0777777171",
+      "email_address": "maddog@thegoogle.com",
+      "address": [
+          "kennel"
+      ]
+    }
+  ]
+}
+```
+
+> Note: Because of the foreign key relationship, it will fail if the id of the case does not exist in the table

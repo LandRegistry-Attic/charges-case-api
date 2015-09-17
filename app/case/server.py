@@ -1,31 +1,18 @@
-from app.case.model import Case
-from flask.ext.api import exceptions, status
-from flask import request, abort
 from datetime import datetime
+from flask import request, abort
+from app.case.model import Case
+from app.case import service as CaseService
+from flask.ext.api import exceptions, status
 
 
 def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
-        result = {}
-        for case, borrower in Case.all_with_borrowers():
-            case_json = case.to_json()
-
-            case_id = case_json['id']
-            if case_id not in result:
-                result[case_id] = case_json
-
-            if 'borrowers' not in result[case_id]:
-                result[case_id]['borrowers'] = []
-
-            if borrower is not None:
-                result[case_id]['borrowers'].append(borrower.to_json())
-
-        return result
+        return [case.to_json() for case in CaseService.all()]
 
     @blueprint.route('/case/<id_>', methods=['GET'])
     def get_case(id_):
-        case = Case.get(id_)
+        case = CaseService.get(id_)
 
         if case is None:
             raise exceptions.NotFound()
@@ -40,11 +27,7 @@ def register_routes(blueprint):
             case_ref=request.data.get('case_ref')
         )
 
-        try:
-            case.save()
-        except Exception as inst:
-            print(str(type(inst)) + ":" + str(inst))
-            raise exceptions.NotAcceptable()
+        CaseService.save(case)
 
         return case.to_json(), status.HTTP_201_CREATED
 
@@ -52,9 +35,9 @@ def register_routes(blueprint):
     def delete_case(id_):
 
         try:
-            case = Case.delete(id_)
+            case = CaseService.delete(id_)
         except Exception as inst:
-            print(type(inst) + ":" + inst)
+            print(str(type(inst)) + ":" + str(inst))
 
         if case is None:
             raise exceptions.NotFound
@@ -63,7 +46,7 @@ def register_routes(blueprint):
 
     @blueprint.route('/case/<deed_id>/status', methods=['POST'])
     def update_status(deed_id):
-        case = Case.get_by_deed_id(deed_id)
+        case = CaseService.get_by_deed_id(deed_id)
 
         if case is None:
             abort(status.HTTP_404_NOT_FOUND)
@@ -71,16 +54,16 @@ def register_routes(blueprint):
         case_status = request.data['status']
         case.status = case_status
 
-        if Case.is_case_status_valid(case_status):
+        if CaseService.is_case_status_valid(case_status):
             case.last_updated = datetime.now()
-            case.save()
+            CaseService.save(case)
             return {'case_status': case_status}, status.HTTP_200_OK
         else:
             abort(status.HTTP_400_BAD_REQUEST)
 
     @blueprint.route('/case/<case_id>/deed', methods=['POST'])
     def update_case_deed(case_id):
-        case = Case.get(case_id)
+        case = CaseService.get(case_id)
 
         if case is None:
             abort(status.HTTP_404_NOT_FOUND)
@@ -94,7 +77,7 @@ def register_routes(blueprint):
         case.status = 'Deed created'
 
         try:
-            case.save()
+            CaseService.save(case)
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -103,7 +86,7 @@ def register_routes(blueprint):
 
     @blueprint.route('/case/<case_id>/application', methods=['POST'])
     def submit(case_id):
-        case = Case.get(case_id)
+        case = CaseService.get(case_id)
 
         if case is None:
             abort(status.HTTP_404_NOT_FOUND)
@@ -115,7 +98,7 @@ def register_routes(blueprint):
         case.last_updated = datetime.now()
 
         try:
-            case.save()
+            CaseService.save(case)
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
