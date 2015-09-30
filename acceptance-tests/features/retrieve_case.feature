@@ -1,4 +1,4 @@
-@US32
+@retrieve_case
 
 Feature: Case API
     In order to
@@ -16,11 +16,6 @@ Acceptance Criteria:
 
 @delete_test_data
 Scenario: Retrieve case from case API
-    Given I have created the following case:
-    """
-    {
-      "conveyancer_id": "1"
-    }
-    """
+    Given I have created a case
     When I retrieve the created case
     Then the correct case details are returned

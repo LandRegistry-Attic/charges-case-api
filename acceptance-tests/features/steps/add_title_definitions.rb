@@ -1,24 +1,10 @@
-Given(/^I add the following property to the case:$/) do |property_json|
-  @added_property = add_property_to_case(@created_case['id'], property_json)
-end
-
 When(/^I retrieve the property for the created case$/) do
-  @retrieved_property = get_property_for_case(@created_case['id'])
+  @retrieved_property = get_property_for_case(@created_case_id)
 end
 
 When(/^I try to add another property to the case$/) do
-  property_json = {
-    'property' => {
-      'locality' => 'Plymouth',
-      'tenure' => 'freehold',
-      'postcode' => 'PL3 5ST',
-      'title_number' => 'DN513498',
-      'street' => '12 Granville Street',
-      'type' => 'Property',
-      'extended' => 'Cattedown'
-    }
-  }
-  @response = HTTP.post(Env.domain + '/case/' + @created_case['id'].to_s +
+  property_json = File.read('./features/data/mortgage_property.json')
+  @response = HTTP.post(Env.case_api + '/case/' + @created_case_id.to_s +
                         '/property', json: property_json)
 end
 

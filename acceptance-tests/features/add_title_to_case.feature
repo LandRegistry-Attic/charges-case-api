@@ -6,31 +6,14 @@ Feature: Add Title to Case
     So that I can register the borrowers mortgage
 
 Background:
-    Given I have created the following case:
-    """
-    {
-      "conveyancer_id": "1"
-    }
-    """
-    And I add the following property to the case:
-    """
-    {
-       "property": {
-         "locality": "Plymouth",
-         "tenure": "freehold",
-         "postcode": "PL6 5DP",
-         "title_number": "DN513498",
-         "street": "18 Janner Lane",
-         "type": "Property",
-         "extended": "St. Budeaux"
-       }
-    }
-    """
+    Given I have created a case with a property but no borrowers
 
+@delete_test_data
 Scenario: Add Title to Case
     When I retrieve the property for the created case
     Then the correct property details are returned
 
+@delete_test_data
 Scenario: Try to Add Two Titles to a Case
     When I try to add another property to the case
     Then a status code of "500" is returned

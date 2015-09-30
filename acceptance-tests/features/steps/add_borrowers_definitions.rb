@@ -1,10 +1,5 @@
-When(/^I add the following borrowers to a case:$/) do |borrower_json|
-  @added_borrowers = JSON.parse(borrower_json)
-  add_borrowers_to_case(@created_case['id'], @added_borrowers)
-end
-
 When(/^I retrieve borrowers for the created case$/) do
-  @retrieved_borrowers = get_borrowers_for_case(@created_case['id'])
+  @retrieved_borrowers = get_borrowers_for_case(@created_case_id)
 end
 
 When(/^I try to add a borrower with missing mandatory information$/) do
@@ -25,15 +20,15 @@ When(/^I try to add a borrower with missing mandatory information$/) do
       }
     ]
   }
-  @response = HTTP.post(Env.domain + '/case/' + @created_case['id'].to_s +
+  @response = HTTP.post(Env.case_api + '/case/' + @created_case_id.to_s +
                         '/borrowers', json: borrower_json)
 end
 
 Then(/^the correct borrowers details are returned$/) do
-  number_of_borrowers = @added_borrowers['borrowers'].count
+  number_of_borrowers = @added_borrowers.count
 
   for i in 0..(number_of_borrowers - 1) do
-    added_borrower = @added_borrowers['borrowers'][i]
+    added_borrower = @added_borrowers[i]
     retrieved_borrower = @retrieved_borrowers[i]
 
     assert_equal(added_borrower['first_name'], retrieved_borrower['first_name'])

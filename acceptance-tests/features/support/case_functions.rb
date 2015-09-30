@@ -1,16 +1,18 @@
-def create_case_data(case_json)
-  case_json = JSON.parse(case_json)
-  response = HTTP.post(Env.domain + '/case', json: case_json)
+def create_case_data
+  case_json = {
+    'conveyancer_id' => '1'
+  }
+  response = HTTP.post(Env.case_api + '/case', json: case_json)
   if response.code == 201
-    JSON.parse(response.body)
+    JSON.parse(response.body)['id']
   else
     fail "Error: Couldn't create case #{case_json}, "\
-            "received response #{response.code}"
+            "Received response #{response.code}"
   end
 end
 
 def get_case_data(case_id)
-  response = HTTP.get(Env.domain + '/case/' + case_id.to_s)
+  response = HTTP.get(Env.case_api + '/case/' + case_id.to_s)
   if response.code == 200
     JSON.parse(response.body)
   else
@@ -20,7 +22,8 @@ def get_case_data(case_id)
 end
 
 def add_borrowers_to_case(case_id, borrower_json)
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
+  borrower_json = JSON.parse(borrower_json)
+  response = HTTP.post(Env.case_api + '/case/' + case_id.to_s +
                       '/borrowers', json: borrower_json)
   if response.code == 200
     JSON.parse(response.body)
@@ -31,7 +34,7 @@ def add_borrowers_to_case(case_id, borrower_json)
 end
 
 def get_borrowers_for_case(case_id)
-  response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/borrowers')
+  response = HTTP.get(Env.case_api + '/case/' + case_id.to_s + '/borrowers')
   if response.code == 200
     JSON.parse(response.body)
   else
@@ -42,7 +45,7 @@ end
 
 def add_property_to_case(case_id, property_json)
   property_json = JSON.parse(property_json)
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
+  response = HTTP.post(Env.case_api + '/case/' + case_id.to_s +
                       '/property', json: property_json)
   if response.code == 200
     JSON.parse(response.body)
@@ -53,7 +56,7 @@ def add_property_to_case(case_id, property_json)
 end
 
 def get_property_for_case(case_id)
-  response = HTTP.get(Env.domain + '/case/' + case_id.to_s + '/property')
+  response = HTTP.get(Env.case_api + '/case/' + case_id.to_s + '/property')
   if response.code == 200
     JSON.parse(response.body)
   else
@@ -63,7 +66,7 @@ def get_property_for_case(case_id)
 end
 
 def delete_case_data(case_id)
-  response = HTTP.delete(Env.domain + '/case/' + case_id.to_s)
+  response = HTTP.delete(Env.case_api + '/case/' + case_id.to_s)
   if response.code == 200
     puts "Case #{case_id} has been deleted."
   else
@@ -76,7 +79,7 @@ def update_case_deed(deed_id, case_id)
   payload = {
     'deed_id' => deed_id
   }
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s +
+  response = HTTP.post(Env.case_api + '/case/' + case_id.to_s +
    '/deed', json: payload)
   if response.code == 200
     JSON.parse(response.body)['id']
@@ -86,8 +89,8 @@ def update_case_deed(deed_id, case_id)
   end
 end
 
-def submit_case(case_id)
-  response = HTTP.post(Env.domain + '/case/' + case_id.to_s + '/application')
+def submit_case_data(case_id)
+  response = HTTP.post(Env.case_api + '/case/' + case_id.to_s + '/application')
   if response.code == 200
     JSON.parse(response.body)
   else

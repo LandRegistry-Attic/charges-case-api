@@ -10,7 +10,7 @@ class Env
     (ENV['DEED_API_URL'] || 'http://deedapi.dev.service.gov.uk')
   end
 
-  def self.domain
+  def self.case_api
     (ENV['CASE_API_URL'] || 'http://case-api.dev.service.gov.uk')
   end
 end

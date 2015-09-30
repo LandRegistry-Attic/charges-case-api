@@ -1,4 +1,4 @@
-@US07
+@submit_case
 
 Feature: Case API ensure application cannot be re-submitted
     In order to
@@ -11,55 +11,7 @@ Acceptance Criteria:
 
 @delete_test_data
 Scenario: Attempt to submit a case with a status of submitted
-    Given I have created the following case:
-    """
-    {
-      "conveyancer_id": "1"
-    }
-    """
-    And I create the following deed:
-    """
-      {
-      "id":"1",
-      "mdref": "MD0149A",
-      "title": {
-        "title-number": "GHR67832",
-        "address": {
-          "street-address": "18 Lordly Place",
-          "extended-address": "",
-          "locality": "London",
-          "postal-code": "N12 5TN"
-        }
-      },
-      "lender": {
-        "name": "Bank of England PLC",
-        "company-number": "2347672",
-        "address": {
-          "street-address": "12 Trinity Place",
-          "extended-address": "Regents Street",
-          "locality": "London",
-          "postal-code": "NW10 6TQ"
-        }
-      },
-      "borrowers":[{
-        "id": "1",
-        "name": "Peter Smith",
-        "address": {
-          "street-address": "83 Lordship Park",
-          "extended-address": "",
-          "locality": "London",
-          "postal-code": "N16 5UP"
-        }
-      }],
-      "restrictions": ["This is my restriction"],
-      "provisions": ["This Mortgage Deed incorporates the Lenders Mortgage Conditions and Explanation 2006, a copy of which has been received by the Borrower.",
-        "The lender is under an obligation to make further advances and applies for the obligation to be entered in the register.",
-        "No disposition of the registered estate by the proprietor of the registered estate is to be registered without a written consent signed by Bank of England Plc."]
-     }
-    """
-    And I link the created deed to the case
-    And I sign the deed
-    And make the deed effective
+    Given I have created a case and deed with one borrower that is effective
     When I send a submit request via the API
-    And submit again
+    And I submit the case again
     Then a status code of "403" is returned
