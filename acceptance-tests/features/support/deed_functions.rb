@@ -20,6 +20,16 @@ def get_deed_data(deed_id)
   end
 end
 
+def delete_deed_data(deed_id)
+  response = HTTP.delete(Env.deed_api + '/deed/' + deed_id.to_s)
+  if response.code == 200
+    puts "Deed #{deed_id} has been deleted."
+  else
+    fail "Error: Couldn't delete deed #{deed_id}, "\
+            "received response #{response.code}."
+  end
+end
+
 def sign_deed_data(deed_id, borrower_id, signature)
   signature_json = {
     'signature' => signature
