@@ -25,19 +25,14 @@ When(/^I try to add a borrower with missing mandatory information$/) do
 end
 
 Then(/^the correct borrowers details are returned$/) do
-  number_of_borrowers = @added_borrowers.count
-
-  for i in 0..(number_of_borrowers - 1) do
-    added_borrower = @added_borrowers[i]
-    retrieved_borrower = @retrieved_borrowers[i]
-
-    assert_equal(added_borrower['first_name'], retrieved_borrower['first_name'])
-    assert_equal(added_borrower['middle_names'],
-                 retrieved_borrower['middle_names'])
-    assert_equal(added_borrower['last_name'], retrieved_borrower['last_name'])
-    assert_equal(added_borrower['address'], retrieved_borrower['address'])
-    assert_equal(added_borrower['email_address'],
-                 retrieved_borrower['email_address'])
-    assert_equal(added_borrower['mobile_no'], retrieved_borrower['mobile_no'])
+  @added_borrowers.zip(@retrieved_borrowers).each do |added, retrieved|
+    assert_equal(added['first_name'], retrieved['first_name'])
+    assert_equal(added['middle_names'],
+                 retrieved['middle_names'])
+    assert_equal(added['last_name'], retrieved['last_name'])
+    assert_equal(added['address'], retrieved['address'])
+    assert_equal(added['email_address'],
+                 retrieved['email_address'])
+    assert_equal(added['mobile_no'], retrieved['mobile_no'])
   end
 end
