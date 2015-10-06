@@ -1,4 +1,4 @@
-@add_borrowers_to_case
+@US14 @add_borrowers_to_case
 
 Feature: Add Borrowers to Case
     As a lender/conveyancer  for a remortgage

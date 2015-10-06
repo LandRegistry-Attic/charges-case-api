@@ -1,4 +1,4 @@
-@submit_case
+@US07 @submit_case
 
 Feature: Case API ensure application cannot be re-submitted
     In order to

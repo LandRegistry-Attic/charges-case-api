@@ -1,4 +1,4 @@
-@add_title_to_case
+@US22 @add_title_to_case
 
 Feature: Add Title to Case
     As a Conveyancer/lender
