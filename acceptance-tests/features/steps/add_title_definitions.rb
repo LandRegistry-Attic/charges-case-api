@@ -3,7 +3,8 @@ When(/^I retrieve the property for the created case$/) do
 end
 
 When(/^I try to add another property to the case$/) do
-  property_json = File.read('./features/data/mortgage_property.json')
+  path = File.expand_path('../../data/mortgage_property.json', __FILE__)
+  property_json = File.read(path)
   @response = HTTP.post(Env.case_api + '/case/' + @created_case_id.to_s +
                         '/property', json: property_json)
 end
