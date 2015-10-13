@@ -2,7 +2,7 @@ from flask_api import exceptions
 
 from app.case.model import Case
 from app.db import db
-
+from app.service import DeedApi
 
 def save(case):
     try:
@@ -41,3 +41,24 @@ def is_case_status_valid(case_status):
     valid_statuses = ['Case created', 'Deed created', 'Deed signed',
                       'Completion confirmed', 'Submitted']
     return case_status in valid_statuses
+
+
+def construct_as_payload(deed_id, key_number, reference, amount):
+
+    payload = None
+
+    deed_api = DeedApi()
+
+    deed_json = deed_api.get(deed_id)
+
+    if deed_json:
+        payload = {
+            "case":{
+                "deed": deed_json,
+                "key-number": key_number,
+                "reference": reference,
+                "mortgage-amount": amount
+            }
+        }
+
+    return payload
