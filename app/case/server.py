@@ -84,12 +84,12 @@ def register_routes(blueprint):
 
         return case.to_json(), status.HTTP_200_OK
 
-    @blueprint.route('/case/<case_id>/<payload>/application', methods=['POST'])
+    @blueprint.route('/case/<case_id>/application', methods=['POST'])
     def submit(case_id):
         case = CaseService.get(case_id)
 
         if case is None:
-            abort(status.HTTP_404_NOT_FOUND)
+           abort(status.HTTP_404_NOT_FOUND)
 
         if case.deed_id is None:
             abort(status.HTTP_403_FORBIDDEN)
