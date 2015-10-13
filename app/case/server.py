@@ -102,10 +102,18 @@ def register_routes(blueprint):
 
         try:
             # submit the new case to the land registry case workers
-            payload = CaseService.construct_as_payload(case.deed_id,"1958333","GR514526")
+            payload = CaseService.construct_as_payload(case.deed_id, "1958333", "GR514526")
+            response = {"status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
 
-            CaseService.save(case)
+            # todo: submit to land registry - false submission
 
+            if payload != "":
+                response = CaseService.simulate_submit_to_land_registry(payload)
+            if response.status_code == status.HTTP_200_OK:
+                CaseService.save(case)
+            else:
+                # Submission Error
+                abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
