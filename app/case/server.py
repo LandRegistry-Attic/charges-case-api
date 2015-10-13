@@ -3,7 +3,7 @@ from flask import request, abort
 from app.case.model import Case
 from app.case import service as CaseService
 from flask.ext.api import exceptions, status
-from app.service.land_registry_api import submit_helper
+
 
 def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
@@ -84,12 +84,12 @@ def register_routes(blueprint):
 
         return case.to_json(), status.HTTP_200_OK
 
-    @blueprint.route('/case/<case_id>/application', methods=['POST'])
+    @blueprint.route('/case/<case_id>/<payload>/application', methods=['POST'])
     def submit(case_id):
         case = CaseService.get(case_id)
 
         if case is None:
-           abort(status.HTTP_404_NOT_FOUND)
+            abort(status.HTTP_404_NOT_FOUND)
 
         if case.deed_id is None:
             abort(status.HTTP_403_FORBIDDEN)
@@ -102,17 +102,10 @@ def register_routes(blueprint):
 
         try:
             # submit the new case to the land registry case workers
-            # TODO: fix hardcoded values / story US90 to be refactored
-            payload = CaseService.construct_as_payload(str(case.deed_id), "1958333", "GR514526", "9000")
+            payload = CaseService.construct_as_payload(case.deed_id,"1958333","GR514526")
 
-            if payload:
-                response = submit_helper(payload)
+            CaseService.save(case)
 
-                if response.status_code == status.HTTP_200_OK:
-                    CaseService.save(case)
-            else:
-                # Submission Error
-                abort(status.HTTP_403_FORBIDDEN)
 
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
