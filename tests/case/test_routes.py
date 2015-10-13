@@ -209,6 +209,7 @@ class TestCaseRoutes(unittest.TestCase):
     @with_context
     @with_client
     def test_submit_case(self, client):
+        print ("First Happy Submission Test")
         case = CaseHelper._create_case_and_save()
         CaseHelper._update_status(case.id, 'Completion confirmed')
 
