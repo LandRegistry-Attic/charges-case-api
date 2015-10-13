@@ -1,8 +1,8 @@
-from flask_api import exceptions
+from flask_api import exceptions, status
 
 from app.case.model import Case
 from app.db import db
-from app.service import DeedApi
+from app.service import deed_api as DeedApi
 
 def save(case):
     try:
@@ -62,3 +62,20 @@ def construct_as_payload(deed_id, key_number, reference, amount):
         }
 
     return payload
+
+
+def simulate_submit_to_land_registry(payload):
+
+    response = {
+        "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
+    }
+
+    # Check Payload has all required fields:
+    if payload['case'] is not None:
+        casedetails = payload['case']
+        if casedetails['deed'] is not None and casedetails['key-number'] == '1958333' and casedetails['reference'] != "":
+
+            response.status_code = status.HTTP_200_OK
+
+    return response
+
