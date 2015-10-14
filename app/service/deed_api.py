@@ -1,4 +1,4 @@
-import requests
+from flask_api import request
 from app import config
 
 
@@ -16,5 +16,5 @@ class DeedApi(object):
             base=self.DEED_API_BASE_HOST,
             deed_id=str(deed_id)
         )
-        return requests.get(url)
+        return request.get(url)
 
