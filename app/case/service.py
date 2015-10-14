@@ -1,8 +1,7 @@
-from flask_api import exceptions, status
+from flask_api import exceptions, status, request
 from app.case.model import Case
 from app.db import db
 from app.service import deed_api as DeedApi
-import requests
 from app import config
 
 def save(case):
