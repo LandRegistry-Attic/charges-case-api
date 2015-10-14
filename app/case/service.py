@@ -3,6 +3,7 @@ from app.case.model import Case
 from app.db import db
 from app.service import deed_api as DeedApi
 from app import config
+import requests
 
 def save(case):
     try:
