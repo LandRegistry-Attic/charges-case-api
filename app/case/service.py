@@ -1,8 +1,9 @@
 from flask_api import exceptions, status
-
 from app.case.model import Case
 from app.db import db
 from app.service import deed_api as DeedApi
+import requests
+from app import config
 
 def save(case):
     try:
@@ -47,9 +48,14 @@ def construct_as_payload(deed_id, key_number, reference, amount):
 
     payload = None
 
-    deed_api = DeedApi()
+    #deed_api = DeedApi()
+    url = "{base}/deed/{deed_id}".format(
+            base=config.DEED_API_BASE_HOST,
+            deed_id=str(deed_id)
+    )
+    deed_json = requests.get(url)
 
-    deed_json = deed_api.get(deed_id)
+    #deed_json = deed_api.get(deed_id)
 
     if deed_json:
         payload = {
@@ -66,16 +72,19 @@ def construct_as_payload(deed_id, key_number, reference, amount):
 
 def simulate_submit_to_land_registry(payload):
 
-    response = {
-        "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
+    dans_response = {
+        "status_code": status.HTTP_200_OK
     }
 
-    # Check Payload has all required fields:
-    if payload['case'] is not None:
-        casedetails = payload['case']
-        if casedetails['deed'] is not None and casedetails['key-number'] == '1958333' and casedetails['reference'] != "":
-
-            response.status_code = status.HTTP_200_OK
-
-    return response
+    return dans_response
+    # # Check Payload has all required fields:
+    # if payload['case'] is not None:
+    #     casedetails = payload['case']
+    #     if casedetails['deed'] is not None:
+    #         if casedetails['key-number'] == '1958333':
+    #             if casedetails['reference'] != "":
+    #                 if casedetails['mortgage-amount'] != 0:
+    #                     return status.HTTP_200_OK
+    # print (my_response)
+    # return my_response
 
