@@ -72,11 +72,11 @@ def construct_as_payload(deed_id, key_number, reference, amount):
 
 def simulate_submit_to_land_registry(payload):
 
-    dans_response = {
+    sim_response = {
         "status_code": status.HTTP_200_OK
     }
 
-    return dans_response
+    return sim_response
     # # Check Payload has all required fields:
     # if payload['case'] is not None:
     #     casedetails = payload['case']
