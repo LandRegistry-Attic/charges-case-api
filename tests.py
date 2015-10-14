@@ -4,7 +4,9 @@ import sys
 from xmlrunner import XMLTestRunner
 from colour_runner.runner import ColourTextTestRunner
 from os import path
-
+sys.path.append("./bin/pycharm-debug-py3k.egg")
+import pydevd
+pydevd.settrace('10.0.2.2', port=8085, stdoutToServer=True, stderrToServer=True)
 
 def thisDir():
     return path.dirname(path.realpath(__file__))
