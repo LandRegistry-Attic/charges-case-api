@@ -1,4 +1,3 @@
-from flask_api import request
 from app import config
 import requests
 
