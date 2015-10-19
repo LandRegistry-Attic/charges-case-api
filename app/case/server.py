@@ -3,7 +3,7 @@ from flask import request, abort
 from app.case.model import Case
 from app.case import service as CaseService
 from flask.ext.api import exceptions, status
-
+from app.service.land_registry_api import submit_helper
 
 def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
@@ -102,16 +102,14 @@ def register_routes(blueprint):
 
         try:
             # submit the new case to the land registry case workers
+            # TODO: fix hardcoded values
             payload = CaseService.construct_as_payload(str(case.deed_id), "1958333", "GR514526", "9000")
-            print (payload)
-            #response = {"status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
 
-            # todo: submit to land registry - false submission
+            if payload:
+                response = submit_helper(payload)
 
-            if payload != "":
-                response = CaseService.simulate_submit_to_land_registry(payload)
-            if response['status_code'] == status.HTTP_200_OK:
-                CaseService.save(case)
+                if response.status_code == status.HTTP_200_OK:
+                    CaseService.save(case)
             else:
                 # Submission Error
                 abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
