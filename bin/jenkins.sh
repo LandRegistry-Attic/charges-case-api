@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/bin/bash -l
 
 env_dir="$JENKINS_HOME/virtualenv/${JOB_NAME// /_}"
 
