@@ -15,7 +15,7 @@ pip install -r requirements_test.txt
 #ensure submodules are cloned
 git submodule update --init
 
-createdb --owner=tomcat --host=192.168.248.73 --username=$USER --password=$PASSWORD  $JOB_NAME
+createdb --owner=tomcat --host=192.168.248.73 --username=$USER  $JOB_NAME
 
 DATABASE_URI=postgres://192.168.248.73/$JOB_NAME python run.py db upgrade head
 
