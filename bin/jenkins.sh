@@ -24,7 +24,7 @@ DATABASE_URI=postgres://192.168.248.73/$JOB_NAME python run.py db upgrade head
 
 DATABASE_URI=postgres://192.168.248.73/$JOB_NAME coverage run --source=app tests.py --xml
 
-dropdb $JOB_NAME
+dropdb testdb -h 192.168.248.73 -U testing 
 
 test_pass=$?
 
