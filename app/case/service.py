@@ -42,21 +42,16 @@ def is_case_status_valid(case_status):
                       'Completion confirmed', 'Submitted']
     return case_status in valid_statuses
 
-
+# TODO: Implementation of this story to be refasctored in beta
 def construct_as_payload(deed_id, key_number, reference, amount):
 
-    payload = None
-
-    deed_json = get_deed_helper(deed_id)
-
-    if deed_json:
-        payload = {
-            "case":{
-                "deed": deed_json,
-                "key-number": key_number,
-                "reference": reference,
-                "mortgage-amount": amount
-            }
+    payload = {
+        "case":{
+            "deed-id": deed_id,
+            "key-number": key_number,
+            "reference": reference,
+            "mortgage-amount": amount
         }
+    }
 
     return payload
