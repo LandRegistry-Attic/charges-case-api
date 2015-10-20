@@ -102,7 +102,6 @@ def register_routes(blueprint):
 
         try:
             # submit the new case to the land registry case workers
-
             # TODO: fix hardcoded values / story US90 to be refactored
             payload = CaseService.construct_as_payload(str(case.deed_id), "1958333", "GR514526", "9000")
 
