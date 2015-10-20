@@ -90,7 +90,6 @@ def update_case_deed(deed_id, case_id)
 end
 
 def submit_case_data(case_id)
-  binding.pry
   response = HTTP.post(Env.case_api + '/case/' + case_id.to_s + '/application')
   if response.code == 200
     JSON.parse(response.body)
