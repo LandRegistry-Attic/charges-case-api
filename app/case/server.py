@@ -5,6 +5,7 @@ from app.case import service as CaseService
 from flask.ext.api import exceptions, status
 from app.service.land_registry_api import submit_helper
 
+
 def register_routes(blueprint):
     @blueprint.route('/case', methods=['GET'])
     def get_cases():
@@ -89,7 +90,7 @@ def register_routes(blueprint):
         case = CaseService.get(case_id)
 
         if case is None:
-           abort(status.HTTP_404_NOT_FOUND)
+            abort(status.HTTP_404_NOT_FOUND)
 
         if case.deed_id is None:
             abort(status.HTTP_403_FORBIDDEN)

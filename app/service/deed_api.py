@@ -3,7 +3,6 @@ import requests
 from flask.ext.api import status
 
 
-
 def get_deed_helper(deed_id):
     result = None
     url = "{base}/deed/{deed_id}".format(
@@ -16,6 +15,3 @@ def get_deed_helper(deed_id):
         result = response.content.decode()
 
     return result
-
-
-

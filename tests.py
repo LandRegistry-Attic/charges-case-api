@@ -5,19 +5,16 @@ from xmlrunner import XMLTestRunner
 from colour_runner.runner import ColourTextTestRunner
 from os import path
 
-
-if (len(sys.argv) > 1 and sys.argv[1].lower() == "debug"):
+if len(sys.argv) > 1 and sys.argv[1].lower() == "debug":
     sys.path.append("./bin/pycharm-debug-py3k.egg")
     import pydevd
+
     pydevd.settrace('10.0.2.2', port=8085, stdoutToServer=True, stderrToServer=True)
 
-if (len(sys.argv) > 1 and sys.argv[1].lower() == "debug"):
-    sys.path.append("./bin/pycharm-debug-py3k.egg")
-    import pydevd
-    pydevd.settrace('10.0.2.2', port=8085, stdoutToServer=True, stderrToServer=True)
 
 def thisDir():
     return path.dirname(path.realpath(__file__))
+
 
 loader = unittest.TestLoader()
 tests = loader.discover('.', pattern="test_*.py")

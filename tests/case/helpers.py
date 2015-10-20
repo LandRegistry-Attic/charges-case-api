@@ -76,4 +76,3 @@ class CaseHelper:
         case = Case.from_json(_case_dict)
 
         return case
-

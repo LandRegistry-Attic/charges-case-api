@@ -4,6 +4,7 @@ from app.db import db
 from app.service.deed_api import get_deed_helper
 from app import config
 
+
 def save(case):
     try:
         db.session.add(case)
@@ -42,11 +43,11 @@ def is_case_status_valid(case_status):
                       'Completion confirmed', 'Submitted']
     return case_status in valid_statuses
 
+
 # TODO: Implementation of this story to be refasctored in beta
 def construct_as_payload(deed_id, key_number, reference, amount):
-
     payload = {
-        "case":{
+        "case": {
             "deed-id": deed_id,
             "key-number": key_number,
             "reference": reference,
