@@ -64,6 +64,6 @@ Given(/^I have created a case and deed with one borrower that is effective$/) do
     sign_deed_data(@created_deed_id, borrower['id'], borrower['first_name'] +
                   ' ' + borrower['last_name'])
   end
-  ### Make the deed effective now it has been signed by all borrowers
+  ### check deed and case are linked correctly
   make_deed_effective(@created_deed_id)
 end
