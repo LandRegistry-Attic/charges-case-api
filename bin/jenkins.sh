@@ -15,13 +15,13 @@ pip install -r requirements_test.txt
 #ensure submodules are cloned
 git submodule update --init
 
-createdb -O tomcat $JOB_NAME
+createdb $JOB_NAME -h $ADDRESS -U $USERNAME
 
-DATABASE_URI=postgres:///$JOB_NAME python run.py db upgrade head
+DATABASE_URI=postgres://$USERNAME:$PGPASSWORD@$ADDRESS/$JOB_NAME python run.py db upgrade head
 
-DATABASE_URI=postgres:///$JOB_NAME coverage run --source=app tests.py --xml
+DATABASE_URI=postgres://$USERNAME:$PGPASSWORD@$ADDRESS/$JOB_NAME coverage run --source=app tests.py --xml
 
-dropdb $JOB_NAME
+dropdb $JOB_NAME -h $ADDRESS -U $USERNAME
 
 test_pass=$?
 
