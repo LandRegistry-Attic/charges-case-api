@@ -10,10 +10,19 @@ class CaseHelper:
     _status = "the status"
     _last_updated = datetime.today()
     _created_on = datetime.today()
+    _deed_id = 1
 
     @staticmethod
     def _create_case_and_save():
         case = CaseHelper._create_case()
+        CaseService.save(case)
+
+        return case
+
+    @staticmethod
+    def _create_full_case_and_save():
+
+        case = CaseHelper._create_case_ready_to_submit()
         CaseService.save(case)
 
         return case
@@ -33,7 +42,8 @@ class CaseHelper:
                       "conveyancer_id": CaseHelper._conveyancer_id,
                       "status": CaseHelper._status,
                       "last_updated": CaseHelper._last_updated.isoformat(),
-                      "created_on": CaseHelper._created_on.isoformat()}
+                      "created_on": CaseHelper._created_on.isoformat(),
+                      }
 
         case = Case.from_json(_case_dict)
 
@@ -48,3 +58,21 @@ class CaseHelper:
         case = CaseService.get(case_id)
         case.status = status
         CaseService.save(case)
+
+    @staticmethod
+    def _create_case_ready_to_submit():
+
+        CaseHelper._id = randint(1, 999999)
+
+        _case_dict = {"type": "Case",
+                      "id": CaseHelper._id,
+                      "conveyancer_id": CaseHelper._conveyancer_id,
+                      "status": CaseHelper._status,
+                      "last_updated": CaseHelper._last_updated.isoformat(),
+                      "created_on": CaseHelper._created_on.isoformat(),
+                      "deed_id": CaseHelper._deed_id
+                      }
+
+        case = Case.from_json(_case_dict)
+
+        return case

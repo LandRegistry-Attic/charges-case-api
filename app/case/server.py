@@ -3,6 +3,7 @@ from flask import request, abort
 from app.case.model import Case
 from app.case import service as CaseService
 from flask.ext.api import exceptions, status
+from app.service.land_registry_api import submit_helper
 
 
 def register_routes(blueprint):
@@ -91,6 +92,9 @@ def register_routes(blueprint):
         if case is None:
             abort(status.HTTP_404_NOT_FOUND)
 
+        if case.deed_id is None:
+            abort(status.HTTP_403_FORBIDDEN)
+
         if case.status != 'Completion confirmed':
             abort(status.HTTP_403_FORBIDDEN)
 
@@ -98,7 +102,23 @@ def register_routes(blueprint):
         case.last_updated = datetime.now()
 
         try:
-            CaseService.save(case)
+            # submit the new case to the land registry case workers
+            # TODO: fix hardcoded values / story US90 to be refactored
+            payload = CaseService.construct_as_payload(str(case.deed_id),
+                                                       "1958333",
+                                                       "GR514526",
+                                                       "9000")
+
+            if payload:
+                # assume payload submit
+                # response = submit_helper(payload)
+
+                if True: #response.status_code == status.HTTP_200_OK:
+                    CaseService.save(case)
+            else:
+                # Submission Error
+                abort(status.HTTP_403_FORBIDDEN)
+
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
             abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
