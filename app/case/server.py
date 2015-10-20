@@ -112,7 +112,7 @@ def register_routes(blueprint):
                     CaseService.save(case)
             else:
                 # Submission Error
-                abort(status.HTTP_500_INTERNAL_SERVER_ERROR)
+                abort(status.HTTP_403_FORBIDDEN)
 
         except Exception as inst:
             print(str(type(inst)) + ":" + str(inst))
