@@ -9,7 +9,8 @@ if len(sys.argv) > 1 and sys.argv[1].lower() == "debug":
     sys.path.append("./bin/pycharm-debug-py3k.egg")
     import pydevd
 
-    pydevd.settrace('10.0.2.2', port=8085, stdoutToServer=True, stderrToServer=True)
+    pydevd.settrace('10.0.2.2', port=8085,
+                    stdoutToServer=True, stderrToServer=True)
 
 
 def thisDir():
