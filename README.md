@@ -5,7 +5,6 @@ The Case API is a JSON API which stores case objects.
 This API holds the functionality for creating the migrating tables, getting data
 from the database, converting to JSON and returns as an endpoint.
 
-
 ### Contents
 
 - [Usage](#usage)
