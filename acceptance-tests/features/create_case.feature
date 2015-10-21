@@ -8,5 +8,5 @@ Feature: Create Case
 
 Scenario: Create a new case
     Given I have created a new case
-    When a status code 201 is returned
-    Then the right details are returned
+    Then a status code of "201" is returned
+    And the right details are returned
